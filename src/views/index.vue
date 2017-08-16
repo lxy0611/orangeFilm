@@ -20,25 +20,27 @@
 		<div class="app-container">
 			<mt-tab-container class="page-tabbar-tab-container" v-model="selected" swipeable>  
 		        <mt-tab-container-item id="tab-container1">  
-		            <Tab1></Tab1> 
+		            <filmTab></filmTab> 
 		        </mt-tab-container-item>  
 		        <mt-tab-container-item id="tab-container2">  
-		            <!-- cell组件 -->  
+		            <findTab></findTab>   
 		        </mt-tab-container-item>  
 		        <mt-tab-container-item id="tab-container3">  
-		            <!-- cell组件 -->  
+		            <meTab></meTab>  
 		        </mt-tab-container-item>  
 	      </mt-tab-container>  
 		</div>
 	</div>
 </template>
 <script>
-import Tab1 from './home.vue'
+import filmTab from './filmTab.vue'
+import findTab from './findTab.vue'
+import meTab from './meTab.vue'
 export default {
 	name: 'index',
   	data () {
     	return {
-      		selected:'tab-container1',
+      		selected:'tab-container2',
     	}
   	},
   	watch:{
@@ -47,7 +49,9 @@ export default {
   		}
   	},
   	components:{
-  		Tab1,
+  		filmTab,
+  		findTab,
+  		meTab,
   	}
 }
 </script>
@@ -57,6 +61,11 @@ export default {
 }
 .app-wrapper .mint-tabbar{
 	background-color: white;
+}
+.app-wrapper .app-container{
+	/* position:relative;
+	bottom: 57px; */
+	margin-bottom:57px;
 }
 
 </style>

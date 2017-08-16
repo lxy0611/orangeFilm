@@ -1,18 +1,18 @@
 <template>
-	<div class="home-wrapper">
+	<div class="film-wrapper">
 		<mt-header fixed>
 			<router-link to="/" slot="left">
 				<span>广州</span>
 				<mt-button icon="back"></mt-button>
 			</router-link>
 			<router-link to="/" slot="right">
-					<el-input
-				  		placeholder="电影/电视剧/影人"
-					  	icon="search"
-					  	v-model="input2"
-					  	:on-icon-click="handleIconClick">
-					</el-input>
-				</router-link> 
+				<el-input
+			  		placeholder="电影/电视剧/影人"
+				  	icon="search"
+				  	v-model="input2"
+				  	:on-icon-click="handleIconClick">
+				</el-input>
+			</router-link> 
 		</mt-header>
 		<mt-swipe :auto="4000">
 			<mt-swipe-item>
@@ -50,7 +50,37 @@
 				</mt-cell>
 			</mt-tab-container-item>
   			<mt-tab-container-item id="2" >
-				<mt-cell v-for="n in 14" :title="'content ' + n" key="n" />
+  				<div class="select-tab">
+  					<div style="width:50%;float:left;">
+						<mt-navbar v-model="selected2" >
+							<mt-tab-item id="1">全部</mt-tab-item>
+						  	<mt-tab-item id="2">8月</mt-tab-item>
+						  	<mt-tab-item id="3">9月</mt-tab-item>
+						  	<mt-tab-item id="4">10月</mt-tab-item>
+						</mt-navbar>
+					</div>
+					<div style="width:25%;float:right;">
+						<mt-navbar v-model="selected2" >
+							<mt-tab-item id="5" class="time-div">时间</mt-tab-item>
+						  	<mt-tab-item id="6">热度</mt-tab-item>
+						</mt-navbar>
+					</div>
+				</div>
+				<div class="film-list" style="clear:both;">
+					<div class="show-date">8月25日，星期五</div>
+					<mt-cell  v-for="file in filmList" key="1" class="film-list">
+					<div style="width:30%;"><img src="../assets/image/4.jpg" width="90" height="120"></div>
+					<div  style="width:50%;" class="info-list">
+						<p class="title-p">{{file.name}}</h4>
+						<p class="introduce-p">导演：{{file.director}}</p>
+						<p class="introduce-p">主演：{{file.act}}</p>
+						<p class="see-p">{{file.see}}想看</p>
+					</div>
+			  		<div style="width:20%;">
+			  			<mt-button type="default" class="interest-btn">想看</mt-button>
+		  			</div>
+				</mt-cell>
+				</div>
   			</mt-tab-container-item>
   		</mt-tab-container >
 
@@ -62,6 +92,7 @@ export default {
   	data () {
     	return {
       		selected: '1',
+      		selected2: '1',
       		filmList:[
       			{
       				name:"二十二",
@@ -87,6 +118,15 @@ export default {
       				see:"698",
       				state:false
       			},
+      			{
+      				name:"十万个冷笑话2",
+      				star:"尚未上映",
+      				director:"卢恒宇 李姝洁",
+      				act:"皇贞季/山新/郝祥海/藤新/图特哈蒙",
+      				see:"999",
+      				state:false
+      			},
+
 
       		]
     	}
@@ -94,96 +134,114 @@ export default {
 }
 </script>
 <style>
-.home-wrapper .mint-header{
+.film-wrapper .mint-header{
 	background-color: #f9c425;
 }
-.mint-header .el-input{
+.film-wrapper .mint-header .el-input{
 	width: 220px;
 }
-.mint-button-icon{
+.film-wrapper .mint-header .el-input input{
+	border: none;
+}
+.film-wrapper .mint-button-icon{
 	transform:rotate(-90deg);
 	-ms-transform:rotate(-90deg); 	/* IE 9 */
 	-moz-transform:rotate(-90deg); 	/* Firefox */
 	-webkit-transform:rotate(-90deg); /* Safari 和 Chrome */
 	-o-transform:rotate(-90deg); 	/* Opera */
 }
-.mint-swipe-item{
+.film-wrapper .mint-swipe-item{
 	width: 100%;
 	background-color: red;
 }
-.mint-swipe-items-wrap,.mint-swipe,.mint-swipe-item{
+.film-wrapper .mint-swipe-items-wrap,.film-wrapper .mint-swipe,.film-wrapper .mint-swipe-item{
 	height: 180px;
 }
-.mint-swipe img{
+.film-wrapper .mint-swipe img{
 	height: 100%;
 	width: 100%;
 }
-.mint-navbar .mint-tab-item{
+.film-wrapper .mint-navbar .mint-tab-item{
 	color:#6b747d;
 }
-.mint-tab-item-label{
+.film-wrapper .mint-tab-item-label{
 	font-size: 14px;
 }
-.mint-navbar .mint-tab-item.is-selected {
+.film-wrapper .mint-navbar .mint-tab-item.is-selected {
 	border-bottom: 3px solid #f9c425;
 	color: #2c3e50;
 	margin-bottom:0px;
 }
-.mint-navbar a{
+.film-wrapper .mint-navbar a{
 	padding-bottom: 15px;
 	padding-top: 15px;
 }
-.mint-button-text{
+.film-wrapper .mint-button-text{
 	font-size: 12px;
 }
-.mint-cell-value button{
+.film-wrapper .mint-cell-value button{
 	width: 50px;
 	height: 30px;
 	font-weight: bolder;
 	background-color: white;
 }
-.buyTicket-btn{
+.film-wrapper .buyTicket-btn{
 	color: #ec294f;
 	border: 1px solid #f76884;
 }
-.booking-btn{
+.film-wrapper .booking-btn,.interest-btn{
 	color: #f8ab5b;
 	border: 1px solid #f9c425;
 }
-.mint-cell-value>div{
+.film-wrapper .mint-cell-value>div{
 	height: 100%;
 }
-.mint-cell-value{
+.film-wrapper .mint-cell-value{
 	width: 100%;
 }
 
-.film-list .title-p{
+.film-wrapper .film-list .title-p{
 	font-size: 16px;
 	font-weight: bold;
 	color: #2f2b2b;
 	font-family: "STSong";
 	margin: 10px 6px;
 }
-.film-list .info-list{
+.film-wrapper .film-list .info-list{
 	text-align: left;
 	margin:10px auto;
 }
-.film-list .introduce-p{
+.film-wrapper .film-list .introduce-p{
 	font-size: 12px;
 
 }
-.film-list .see-p{
+.film-wrapper .film-list .see-p{
 	font-size: 14px;
 	color: black;
 	margin: 10px 6px;
 }
-.film-list p{
+.film-wrapper .film-list p{
 	margin: 6px;
 }
-.film-list .star-img{
+.film-wrapper .film-list .star-img{
 	height: 18px;
 	width: 18px;
 	position: relative;
     top: -3px;
 }
+.film-wrapper .show-date{
+	background-color: #EEEEEE;
+	height: 33px;
+	font-size: 14px;
+	line-height: 33px;
+	text-align: left;
+	padding-left: 10px;
+}
+.film-wrapper .time-div .mint-tab-item-label{
+	border-left: 1px solid #C9C9C9;
+}
+.film-wrapper .select-tab .mint-navbar .mint-tab-item.is-selected{
+	border-bottom: none;
+}
+
 </style>

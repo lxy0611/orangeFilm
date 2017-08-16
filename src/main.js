@@ -7,11 +7,13 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import VueScroll from 'vue-scroll'
 
 
 Vue.config.productionTip = false
 Vue.use(MintUI)
 Vue.use(ElementUI)
+Vue.use(VueScroll)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

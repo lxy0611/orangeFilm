@@ -40,7 +40,7 @@ export default {
 	name: 'index',
   	data () {
     	return {
-      		selected:'tab-container2',
+      		selected:'tab-container1',
     	}
   	},
   	watch:{

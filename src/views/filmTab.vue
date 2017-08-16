@@ -31,7 +31,7 @@
 		</mt-navbar>
 		<mt-tab-container v-model="selected">
 			<mt-tab-container-item id="1">
-				<mt-cell  v-for="file in filmList" key="1" class="film-list">
+				<mt-cell  v-for="file in filmList" key="1" class="film-list"  to="/infoPage">
 					<div style="width:30%;"><img src="../assets/image/4.jpg" width="90" height="120"></div>
 					<div  style="width:50%;" class="info-list">
 						<p class="title-p">{{file.name}}</h4>
@@ -130,6 +130,12 @@ export default {
 
       		]
     	}
+  	},
+  	methods: {
+  		onScroll:function(e, position){
+      		this.position = position;
+    	},
+
   	}
 }
 </script>

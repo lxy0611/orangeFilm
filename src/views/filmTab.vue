@@ -30,20 +30,25 @@
 		</mt-navbar>
 		<mt-tab-container v-model="selected">
 			<mt-tab-container-item id="1">
-				<mt-cell  v-for="file in filmList" key="1" class="film-list"  to="/infoPage">
-					<div style="width:30%;"><img src="../assets/image/4.jpg" width="100%" height="auto"></div>
+				<mt-cell  v-for="film in filmList" key="1" class="film-list"  to="/infoPage">
+					<div style="width:30%;"><img :src="film.images.large" width="100%" height="auto"></div>
 					<div  style="width:50%;" class="info-list">
-						<p class="title-p">{{file.name}}</h4>
+						<p class="title-p">{{film.title}}</h4>
 						<p class="introduce-p">
-							<img src="../assets/image/星.png" class="star-img">
-							{{file.star}}
+							<el-rate v-model="film.rating.average" disabled show-text text-color="#ff9900" v-if="film.rating.average!=0">
+							</el-rate>
+							<span v-else>未有上映</span>
 						</p>
-						<p class="introduce-p">导演：{{file.director}}</p>
-						<p class="introduce-p">主演：{{file.act}}</p>
-						<p class="see-p">{{file.see}}人看过</p>
+						<p class="introduce-p">导演：
+							<span v-for="director in film.directors">{{director.name}}</span>
+						</p>
+						<p class="introduce-p">主演：
+							<span v-for="cast in film.casts">{{cast.name}}&nbsp;/&nbsp;</span>
+						</p>
+						<p class="see-p">{{film.collect_count}}人看过</p>
 					</div>
 			  		<div style="width:20%;">
-			  			<mt-button type="default" class="buyTicket-btn" v-if="file.state==true">购票</mt-button>
+			  			<mt-button type="default" class="buyTicket-btn" v-if="film.rating.average!=0">购票</mt-button>
 			  			<mt-button type="default" class="booking-btn" v-else>预售</mt-button>
 		  			</div>
 				</mt-cell>
@@ -67,13 +72,17 @@
 				</div>
 				<div class="film-list" style="clear:both;">
 					<div class="show-date">8月25日，星期五</div>
-					<mt-cell  v-for="file in filmList" key="1" class="film-list">
-					<div style="width:30%;"><img src="../assets/image/4.jpg" width="100%" height="auto"></div>
+					<mt-cell  v-for="film in filmList" key="1" class="film-list">
+					<div style="width:30%;"><img :src="film.images.large" width="100%" height="auto"></div>
 					<div  style="width:50%;" class="info-list">
-						<p class="title-p">{{file.name}}</h4>
-						<p class="introduce-p">导演：{{file.director}}</p>
-						<p class="introduce-p">主演：{{file.act}}</p>
-						<p class="see-p">{{file.see}}想看</p>
+						<p class="title-p">{{film.title}}</h4>
+						<p class="introduce-p">主演：
+							<span v-for="director in film.directors">{{director.name}}</span>
+						</p>
+						<p class="introduce-p">主演：
+							<span v-for="cast in film.casts">{{cast.name}}&nbsp;/&nbsp;</span>
+						</p>
+						<p class="see-p">{{film.collect_count}}人想看</p>
 					</div>
 			  		<div style="width:20%;">
 			  			<mt-button type="default" class="interest-btn">想看</mt-button>
@@ -87,70 +96,48 @@
 </template>
 <script>
 import Vue from 'vue';
+import {api} from '../global/api';
+import jsonp from '@/directive/jsonp.js'
+/*import config from './js/config.js'*/
 export default {
 	name: 'home',
   	data () {
     	return {
       		selected: '1',
       		selected2: '1',
-      		filmList:[
-      			{
-      				name:"二十二",
-      				star:"9.0",
-      				director:"郭柯",
-      				act:"",
-      				see:"17175",
-      				state:true
-      			},
-      			{
-      				name:"战狼2",
-      				star:"7.5",
-      				director:"吴京",
-      				act:"吴京/弗兰克.格里罗/吴刚",
-      				see:"326062",
-      				state:true
-      			},
-      			{
-      				name:"破局",
-      				star:"尚未上映",
-      				director:"连",
-      				act:"郭富城/王千源/刘涛",
-      				see:"698",
-      				state:false
-      			},
-      			{
-      				name:"十万个冷笑话2",
-      				star:"尚未上映",
-      				director:"卢恒宇 李姝洁",
-      				act:"皇贞季/山新/郝祥海/藤新/图特哈蒙",
-      				see:"999",
-      				state:false
-      			},
-      		]
+      		filmList:{},
     	}
   	},
   	methods: {
-  		handleIconClick(){
-  			console.log("");
-  		},
+  		divTwo(val){
+	      	return val/2;
+	    },
   		getData(){
-			Vue.http.get('https://api.douban.com/v2/movie/in_theaters').then(function(response){
+			/*Vue.http.get(api.in_theaters).then(function(response){
 				console.log(response.data);
 			}, function(response){
 				console.log('请求失败.');
-			})
+			})*/
+            jsonp('https://api.douban.com/v2/movie/in_theaters', { count: 10, start: this.currentPage }, function (data) {
+                this.filmList=data.subjects;
+                console.log(this.filmList);
+            }.bind(this));
 		},
+
   	},
-	/*mounted:function(){
+  	watch: {
+            //监测$route对象，如果发生改变，就触发request方法
+        "$route":'getData'
+    },
+	mounted:function(){
 	    this.getData();
-	    this.updateInfo();
-	},*/
+	},
 }
 </script>
 <style>
 .film-wrapper .mint-header{
 	background-color: #f9c425;
-	font-size: 0.3rem;
+	font-size: 0.35rem;
 	height: 1rem;
 }
 .mint-header .is-right{
@@ -163,9 +150,13 @@ export default {
 	width: 100%;
     display: inline-block;
 }
+.el-input__icon {
+    width: 0.9rem;
+}
 .film-wrapper .mint-header .el-input{
 	min-width: 220px;
 	width: 100%;
+	font-size: 0.35rem;
 }
 .el-input__inner {
 	height: 0.78rem;
@@ -187,7 +178,7 @@ export default {
 }
 .film-wrapper .mint-swipe-items-wrap,.film-wrapper .mint-swipe,.film-wrapper .mint-swipe-item{
 	width: 100%;
-	height: 3.5rem;
+	height: 3.8rem;
 } 
 .film-wrapper .mint-swipe img{
 	width: 100%;
@@ -196,24 +187,18 @@ export default {
 .film-wrapper .mint-navbar .mint-tab-item{
 	color:#6b747d;
 }
-.film-wrapper .mint-tab-item-label{
-	font-size: 0.3rem;
-}
+
 .film-wrapper .mint-navbar .mint-tab-item.is-selected {
 	border-bottom: 3px solid #f9c425;
 	color: #2c3e50;
 	margin-bottom:0px;
 }
-.film-wrapper .mint-navbar a{
-	padding-bottom: 15px;
-	padding-top: 15px;
-}
 .film-wrapper .mint-button-text{
-	font-size: 0.25rem;
+	font-size: 0.28rem;
 }
 .film-wrapper .mint-cell-value button{
-	width: 50px;
-	height: 30px;
+    width: 1.2rem;
+    height: 0.7rem;
 	font-weight: bolder;
 	background-color: white;
 }
@@ -238,37 +223,37 @@ export default {
 	font-weight: bold;
 	color: #2f2b2b;
 	font-family: "STSong";
-	margin: 10px 6px;
+	margin:  0.25rem 0.1rem;
 }
 .film-wrapper .film-list .info-list{
 	text-align: left;
-	margin:10px auto;
+	padding-left: 0.35rem;
 }
 .film-wrapper .film-list .introduce-p{
-	font-size: 0.25rem;
+	font-size: 0.28rem;
 
 }
 .film-wrapper .film-list .see-p{
 	font-size: 0.3rem;
 	color: black;
-	margin: 10px 6px;
+	margin: 0.18rem 0.1rem;
 }
 .film-wrapper .film-list p{
-	margin: 6px;
+	margin: 0.2rem  0.1rem;
 }
 .film-wrapper .film-list .star-img{
-	height: 18px;
-	width: 18px;
+	height:  0.45rem;
+	width:  0.45rem;
 	position: relative;
     top: -3px;
 }
 .film-wrapper .show-date{
 	background-color: #EEEEEE;
-	height: 33px;
-	font-size: 0.3rem;
-	line-height: 33px;
+	height:  0.80rem;
+	font-size: 0.35rem;
+	line-height:  0.80rem;
 	text-align: left;
-	padding-left: 10px;
+	padding-left: 0.23rem;
 }
 .film-wrapper .time-div .mint-tab-item-label{
 	border-left: 1px solid #C9C9C9;

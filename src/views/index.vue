@@ -55,7 +55,7 @@ export default {
   	}
 }
 </script>
-<style scoped>
+<style>
 .app-wrapper .mint-header{
 	background-color: #f9c425;
 }
@@ -63,12 +63,25 @@ export default {
 	background-color: white;
 }
 .app-wrapper .app-container{
-	/* position:relative;
-	bottom: 57px; */
-	margin-bottom:57px;
+	margin-bottom:1.1rem;
 }
-.app-wrapper .bottom-tabber ..mint-tab-item-icon{
+.app-wrapper .mint-tab-item-icon{
 	height: 0.5rem;
 	width: 0.5rem;
+}
+.app-wrapper *{
+	font-size: 0.28rem;
+}
+.app-wrapper .mint-navbar a{
+	padding-bottom: 0.28rem;;
+	padding-top: 0.28rem;;
+}
+.app-wrapper .mint-tab-item-label{
+	font-size: 0.3rem;
+}
+.app-wrapper .mint-header {
+    background-color: #f9c425;
+    font-size: 0.35rem;
+    height: 1rem;
 }
 </style>

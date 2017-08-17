@@ -9,12 +9,24 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import './directive/rem'
 import vueResource from 'vue-resource'
-
+import focus from './directive/focus'
+import VueRouter from 'vue-router'
 
 Vue.config.productionTip = false
 Vue.use(MintUI)
 Vue.use(ElementUI)
 Vue.use(vueResource)
+
+Vue.use(VueRouter)
+Vue.use(focus)
+/*var routes = [
+	{ path: '/:server/:page', component: movielist },
+	{ path: '*', redirect:'/in_theaters/0'}
+]
+var router = new VueRouter({
+  routes
+})*/
+
 
 new Vue({
   el: '#app',

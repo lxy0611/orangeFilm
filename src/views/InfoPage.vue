@@ -10,13 +10,13 @@
 			<img src="../assets/image/4.jpg">
 		</div>
 		<div class="info-div">
-			<div style="width:60%">
+			<div style="width:55%">
 				<h3 style="margin-bottom: 15px;">二十二</h3>
 				<p>2017/动作</p>
 				<p>上映时间：2017-07-27（中国大陆）</p>
 				<p>片长：123分钟</p>
 			</div>
-			<div style="width:35%">
+			<div style="width:38%">
 				<div class="score-div">
 					<p>豆瓣评分</p>
 					<h3>7.5</h3>
@@ -41,7 +41,7 @@
 		<div class="buyTicket-div">
 			<div>
   				<span>
-  				<img slot="icon" src="../assets/image/票.png" width="20" height="20">&nbsp;&nbsp;选座购票</span>
+  				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
   			</div>
   			<div style="float:right; ">
   				<span class="redWord">￥27元起&nbsp;></span>
@@ -61,7 +61,6 @@
 				<p class="content-p"></p>
 			</div>
 		</div>
-		
 		<mt-navbar v-model="selected">
 			<mt-tab-item id="1">评论</mt-tab-item>
 		  	<mt-tab-item id="2">讨论区</mt-tab-item>
@@ -82,11 +81,16 @@ export default {
 </script>
 <style>
 .infoPage-wrapper .mint-header{
+	padding-top:  0.25rem;;
 	background: rgba(255,255,255,0);
+	font-size: 0.35rem;
+}
+.infoPage-wrapper .el-icon-share{
+	margin-right: 10px;
 }
 .infoPage-wrapper{
 	position: relative;
-	top:-40px;
+	top:-1rem;
 }
 .bg-img{
 	width: 100%;
@@ -114,17 +118,20 @@ export default {
 }
 .info-div h3{
 	color: rgb(92, 100, 107);
+	font-size: 0.45rem;
 }
 .info-div p,.detailInfo-div .title-p{
-	font-size: 12px;
-	margin:5px 0px;
+	font-size: 0.28rem;
+	margin:0.2rem 0px;
 	color: #888;
 }
 .score-div{
-	min-width: 90px;
+	position: relative;
+    top: -0.3rem;
+	min-width: 2.5rem;
 	width: 80%;
-	height: 90px;
-	margin-left: 15px;
+	height: 2.5rem;
+	margin-left: 0.25rem;
 	text-align: center;
 	background-color: white;
 	box-shadow: 2px 2px 2px 2px #EEEEEE;
@@ -138,16 +145,16 @@ export default {
     margin-bottom: 8px;
 }
 .star-img{
-	height: 14px;
-	width: 14px;
+	height: 0.35rem;
+	width: 0.35rem;
 }
 .operbtn-div .star-img{
-	height: 10px;
-	width: 10px;
+	height: 0.25rem;
+	width: 0.25rem;
 }
 .operbtn-div button{
-	height: 30px;
-	font-size: 12px;
+	height:  0.9rem;
+	font-size: 0.28rem;
 	background-color: white;
 	color:#f9c425;
 	border: 1px solid #f9c425;
@@ -167,7 +174,7 @@ export default {
 	color:#ec294f;;
 }
 .buyTicket-div{
-	margin-bottom:20px;
+	font-size: 0.35rem;
 }
 .buyTicket-div>div{
 	width: 50%;
@@ -193,13 +200,23 @@ export default {
 .detailInfo-div p{
 	text-align: left;
 }
-.detailInfo-div .content-p{
-	font-size: 14px;
+.detailInfo-div .content-p,.mintui{
+	font-size: 0.35rem;
 }
 .detailInfo-div .limit-p{
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 	overflow: hidden;
+}
+.mint-tab-item-label{
+	font-size: 0.28rem;
+}
+.mint-navbar .mint-tab-item{
+	padding: 0.4rem;
+}
+.buyTicket-div>div img{
+    width: 0.48rem;
+ 	height: 0.48rem;
 }
 </style>

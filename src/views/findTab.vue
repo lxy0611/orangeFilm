@@ -39,4 +39,20 @@ export default {
 	color: #2c3e50;
 	margin-bottom:0px;
 }
+.find-wrapper .mint-header .el-input {
+    min-width: 220px;
+    width: 100%;
+    font-size: 0.35rem;
+}
+.find-wrapper .mint-header .is-left a {
+    width: 100%;
+    display: inline-block;
+}
+.find-wrapper .mint-header .is-left {
+    -webkit-box-flex: none;
+    -ms-flex: none;
+    flex: none;
+    width: 90%;
+    margin-left: 5%;
+}
 </style>

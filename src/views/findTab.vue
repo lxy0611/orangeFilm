@@ -5,7 +5,6 @@
 				<el-input
 			  		placeholder="电影/电视剧/影人"
 				  	icon="search"
-				  	v-model="input2"
 				  	:on-icon-click="handleIconClick">
 				</el-input>
 			</router-link> 
@@ -23,6 +22,11 @@ export default {
     	return {
       		selected:'1',
     	}
+  	},
+  	methods: {
+  		handleIconClick(){
+  			console.log("");
+  		},
   	}
 }
 </script>

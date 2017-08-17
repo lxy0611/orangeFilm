@@ -1,6 +1,6 @@
 <template>
 	<div class="app-wrapper">
-		<mt-tabbar fixed >
+		<mt-tabbar fixed class="bottom-tabber">
 			<mt-tab-item id="tab1" @click.native.prevent="selected = 'tab-container1'">
 				<img slot="icon" src="../assets/image/热映.png" v-if="selected !== 'tab-container1'">
 				<img slot="icon" src="../assets/image/热映1.png" v-else>
@@ -67,5 +67,8 @@ export default {
 	bottom: 57px; */
 	margin-bottom:57px;
 }
-
+.app-wrapper .bottom-tabber ..mint-tab-item-icon{
+	height: 0.5rem;
+	width: 0.5rem;
+}
 </style>

@@ -9,8 +9,7 @@
 				<el-input
 			  		placeholder="电影/电视剧/影人"
 				  	icon="search"
-				  	v-model="input2"
-				  	:on-icon-click="handleIconClick">
+				  	:on-icon-click="getData">
 				</el-input>
 			</router-link> 
 		</mt-header>
@@ -32,7 +31,7 @@
 		<mt-tab-container v-model="selected">
 			<mt-tab-container-item id="1">
 				<mt-cell  v-for="file in filmList" key="1" class="film-list"  to="/infoPage">
-					<div style="width:30%;"><img src="../assets/image/4.jpg" width="90" height="120"></div>
+					<div style="width:30%;"><img src="../assets/image/4.jpg" width="100%" height="auto"></div>
 					<div  style="width:50%;" class="info-list">
 						<p class="title-p">{{file.name}}</h4>
 						<p class="introduce-p">
@@ -69,7 +68,7 @@
 				<div class="film-list" style="clear:both;">
 					<div class="show-date">8月25日，星期五</div>
 					<mt-cell  v-for="file in filmList" key="1" class="film-list">
-					<div style="width:30%;"><img src="../assets/image/4.jpg" width="90" height="120"></div>
+					<div style="width:30%;"><img src="../assets/image/4.jpg" width="100%" height="auto"></div>
 					<div  style="width:50%;" class="info-list">
 						<p class="title-p">{{file.name}}</h4>
 						<p class="introduce-p">导演：{{file.director}}</p>
@@ -87,6 +86,7 @@
 	</div>
 </template>
 <script>
+import Vue from 'vue';
 export default {
 	name: 'home',
   	data () {
@@ -126,25 +126,50 @@ export default {
       				see:"999",
       				state:false
       			},
-
-
       		]
     	}
   	},
   	methods: {
-  		onScroll:function(e, position){
-      		this.position = position;
-    	},
-
-  	}
+  		handleIconClick(){
+  			console.log("");
+  		},
+  		getData(){
+			Vue.http.get('https://api.douban.com/v2/movie/in_theaters').then(function(response){
+				console.log(response.data);
+			}, function(response){
+				console.log('请求失败.');
+			})
+		},
+  	},
+	/*mounted:function(){
+	    this.getData();
+	    this.updateInfo();
+	},*/
 }
 </script>
 <style>
 .film-wrapper .mint-header{
 	background-color: #f9c425;
+	font-size: 0.3rem;
+	height: 1rem;
+}
+.mint-header .is-right{
+    -webkit-box-flex: none;
+    -ms-flex: none;
+    flex: none;
+    width: 80%;
+}
+.mint-header .is-right a{
+	width: 100%;
+    display: inline-block;
 }
 .film-wrapper .mint-header .el-input{
-	width: 220px;
+	min-width: 220px;
+	width: 100%;
+}
+.el-input__inner {
+	height: 0.78rem;
+	font-size: 0.3rem;
 }
 .film-wrapper .mint-header .el-input input{
 	border: none;
@@ -161,17 +186,18 @@ export default {
 	background-color: red;
 }
 .film-wrapper .mint-swipe-items-wrap,.film-wrapper .mint-swipe,.film-wrapper .mint-swipe-item{
-	height: 180px;
-}
-.film-wrapper .mint-swipe img{
-	height: 100%;
 	width: 100%;
+	height: 3.5rem;
+} 
+.film-wrapper .mint-swipe img{
+	width: 100%;
+	height: auto;
 }
 .film-wrapper .mint-navbar .mint-tab-item{
 	color:#6b747d;
 }
 .film-wrapper .mint-tab-item-label{
-	font-size: 14px;
+	font-size: 0.3rem;
 }
 .film-wrapper .mint-navbar .mint-tab-item.is-selected {
 	border-bottom: 3px solid #f9c425;
@@ -183,7 +209,7 @@ export default {
 	padding-top: 15px;
 }
 .film-wrapper .mint-button-text{
-	font-size: 12px;
+	font-size: 0.25rem;
 }
 .film-wrapper .mint-cell-value button{
 	width: 50px;
@@ -204,10 +230,11 @@ export default {
 }
 .film-wrapper .mint-cell-value{
 	width: 100%;
+	padding:10px 0px;
 }
 
 .film-wrapper .film-list .title-p{
-	font-size: 16px;
+	font-size: 0.4rem;
 	font-weight: bold;
 	color: #2f2b2b;
 	font-family: "STSong";
@@ -218,11 +245,11 @@ export default {
 	margin:10px auto;
 }
 .film-wrapper .film-list .introduce-p{
-	font-size: 12px;
+	font-size: 0.25rem;
 
 }
 .film-wrapper .film-list .see-p{
-	font-size: 14px;
+	font-size: 0.3rem;
 	color: black;
 	margin: 10px 6px;
 }
@@ -238,7 +265,7 @@ export default {
 .film-wrapper .show-date{
 	background-color: #EEEEEE;
 	height: 33px;
-	font-size: 14px;
+	font-size: 0.3rem;
 	line-height: 33px;
 	text-align: left;
 	padding-left: 10px;

@@ -11,6 +11,7 @@ import './directive/rem'
 import vueResource from 'vue-resource'
 import focus from './directive/focus'
 import VueRouter from 'vue-router'
+import './assets/css/swiper-3.4.2.min.css'
 
 Vue.config.productionTip = false
 Vue.use(MintUI)

@@ -7,19 +7,25 @@
 		 	<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
 		</mt-header>
 		<div class="bg-img">
-			<img src="../assets/image/4.jpg">
+			<img :src="filmInfo.images.large">
 		</div>
 		<div class="info-div">
 			<div style="width:55%">
-				<h3 style="margin-bottom: 15px;">二十二</h3>
-				<p>2017/动作</p>
-				<p>上映时间：2017-07-27（中国大陆）</p>
+				<h3 style="margin-bottom: 15px;">{{filmInfo.title}}</h3>
+				<p>
+					{{filmInfo.year}}
+					<span v-for="(genre,index) in filmInfo.genres">
+						{{'/'+genre}}
+					</span>
+				</p>
+				<p>上映时间：2017-07-27（{{filmInfo.countries[0]}}）</p>
 				<p>片长：123分钟</p>
 			</div>
 			<div style="width:38%">
 				<div class="score-div">
+					<h3 v-if="filmInfo.rating.average==0"><span>&nbsp;</span></h3>
 					<p>豆瓣评分</p>
-					<h3>7.5</h3>
+					<h3 v-if="filmInfo.rating.average!=0">{{filmInfo.rating.average}}</h3>
 					<p>
 						<img src="../assets/image/星1.png" class="star-img">
 						<img src="../assets/image/星1.png" class="star-img">
@@ -27,7 +33,8 @@
 						<img src="../assets/image/星1.png" class="star-img">
 						<img src="../assets/image/星.png" class="star-img">
 					</p>
-					<p>318693人</p>
+					<p v-if="filmInfo.rating.average!=0">{{filmInfo.ratings_count}}人</p>
+					<p v-else>暂无评分</p>
 				</div>
 			</div>
 		</div>
@@ -50,11 +57,31 @@
 		<div class="detailInfo-div">
 			<div>
 				<p class="title-p">简介</p>
-				<p class="content-p limit-p">在日本侵华战争（1931-1945）的十四年间，中国大约曾有20万，甚至更多的女性被日军诱骗、强迫，沦为日军发泄性欲、任意摧残的性奴隶。她们在战争期间受尽各种难以想象、难以启齿的虐待，其中大部分当时就被折磨至死</p>
+				<p class="content-p limit-p">{{filmInfo.summary}}</p>
 			</div>
 			<div>
 				<p class="title-p">影人</p>
-				<p class="content-p"></p>
+			<!-- 	<p class="content-p"> -->
+					<div class="swiper-container">
+		    			<div class="swiper-wrapper cast-swiper">
+					        <div class="swiper-slide" v-for="n in 6" key="1">
+					        	<div>
+					        		<img src="../assets/image/4.jpg">
+					        		<p class="cast-p">古天乐</p>
+					        		<p class="act-p">饰：李忠志</p>
+					        	</div>
+					        </div>
+					        <div class="swiper-slide">
+					        	<a class="all-link">
+					        		<div>
+					        			<div>全部</div>
+					        			<div>15人</div>
+					        		</div>
+					        	</a>
+					        </div>
+		    			</div>
+					</div>
+				<!-- </p> -->
 			</div>
 			<div>
 				<p class="title-p">预告片/剧照</p>
@@ -70,13 +97,37 @@
 	</div>
 </template>
 <script>
+import jsonp from '@/directive/jsonp.js';
+import Swiper from '@/../static/swiper/swiper-3.4.2.min.js'
+//初始化Swiper
 export default {
 	name: 'infoPage',
   	data () {
     	return {
       		selected:'1',
+      		filmInfo:{},
     	}
-  	}
+  	},
+  	methods: {
+  		//通过动态路由传参，检索某一条信息
+        getData(){
+        	let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id;
+			jsonp(url, {city:'广州' }, function (data) {
+                this.filmInfo=data;
+                console.log("dddddddddddddd",data);
+            }.bind(this));
+		}
+  	},
+  	mounted:function(){
+	    this.getData();
+	 	var mySwiper = new Swiper ('.swiper-container', {
+		    direction: 'horizontal',
+		    loop: false,
+		    slidesPerView : 3,
+			slidesPerGroup : 3,
+		})
+		},
+
 }
 </script>
 <style>
@@ -92,20 +143,20 @@ export default {
 	position: relative;
 	top:-1rem;
 }
-.bg-img{
+.infoPage-wrapper .bg-img{
 	width: 100%;
 	padding-bottom: 20px;
 	background-color: #97B5B5;
 }
-.bg-img img{
+.infoPage-wrapper .bg-img img{
 	width:70%;
 	height: auto;
 	margin-top:60px;
 }
-.mint-navbar{
+.infoPage-wrapper .mint-navbar{
 	background-color: #F5F5F5;
 }
-.info-div{
+.infoPage-wrapper .info-div{
 	text-align: left;
 	margin: 10px 10px;
 	width: 100%;
@@ -116,16 +167,16 @@ export default {
     padding-right: 10px;
     margin-left: 10px;
 }
-.info-div h3{
+.infoPage-wrapper .info-div h3{
 	color: rgb(92, 100, 107);
 	font-size: 0.45rem;
 }
-.info-div p,.detailInfo-div .title-p{
+.infoPage-wrapper .info-div p,.infoPage-wrapper .detailInfo-div .title-p{
 	font-size: 0.28rem;
 	margin:0.2rem 0px;
 	color: #888;
 }
-.score-div{
+.infoPage-wrapper .score-div{
 	position: relative;
     top: -0.3rem;
 	min-width: 2.5rem;
@@ -137,22 +188,22 @@ export default {
 	box-shadow: 2px 2px 2px 2px #EEEEEE;
     padding-bottom: 10px;
 }
-.info-div>div{
+.infoPage-wrapper .info-div>div{
 	display: inline-block;
 }
-.info-div div:first-child h3{
+.infoPage-wrapper .info-div div:first-child h3{
     margin-top: 8px;
     margin-bottom: 8px;
 }
-.star-img{
+.infoPage-wrapper .star-img{
 	height: 0.35rem;
 	width: 0.35rem;
 }
-.operbtn-div .star-img{
+.infoPage-wrapper .operbtn-div .star-img{
 	height: 0.25rem;
 	width: 0.25rem;
 }
-.operbtn-div button{
+.infoPage-wrapper .operbtn-div button{
 	height:  0.9rem;
 	font-size: 0.28rem;
 	background-color: white;
@@ -162,7 +213,7 @@ export default {
 .infoPage-wrapper>div,.infoPage-wrapper>a{
 	margin-bottom:30px;
 }
-.mint-cell-value{
+.infoPage-wrapper .mint-cell-value{
 	width: 100%;
 }
 .infoPage-wrapper .mint-navbar .mint-tab-item.is-selected {
@@ -170,53 +221,96 @@ export default {
 	color: #2c3e50;
 	margin-bottom:0px;
 }
-.redWord{
+.infoPage-wrapper .redWord{
 	color:#ec294f;;
 }
-.buyTicket-div{
+.infoPage-wrapper .buyTicket-div{
 	font-size: 0.35rem;
 }
-.buyTicket-div>div{
+.infoPage-wrapper .buyTicket-div>div{
 	width: 50%;
 	display: inline-block;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
  	-moz-box-sizing: border-box;
 }
-.buyTicket-div>div:first-child{
+.infoPage-wrapper .buyTicket-div>div:first-child{
 	text-align: left;
 	padding-left: 20px;
 }
-.buyTicket-div>div:last-child{
+.infoPage-wrapper .buyTicket-div>div:last-child{
 	text-align: right;
 	padding-right: 20px;
 }
-.detailInfo-div{
+.infoPage-wrapper .detailInfo-div{
 	border-top:1px solid #F1F1F1;
 }
-.detailInfo-div>div{
+.infoPage-wrapper .detailInfo-div>div{
 	padding: 0px 20px;
 }
-.detailInfo-div p{
+.infoPage-wrapper .detailInfo-div p{
 	text-align: left;
 }
-.detailInfo-div .content-p,.mintui{
+.infoPage-wrapper .detailInfo-div .content-p,.infoPage-wrapper .mintui{
 	font-size: 0.35rem;
 }
-.detailInfo-div .limit-p{
+.infoPage-wrapper .detailInfo-div .limit-p{
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 	overflow: hidden;
 }
-.mint-tab-item-label{
+.infoPage-wrapper .mint-tab-item-label{
 	font-size: 0.28rem;
 }
-.mint-navbar .mint-tab-item{
+.infoPage-wrapper .mint-navbar .mint-tab-item{
 	padding: 0.4rem;
 }
-.buyTicket-div>div img{
+.infoPage-wrapper .buyTicket-div>div img{
     width: 0.48rem;
  	height: 0.48rem;
 }
+
+.swiper-slide{
+	width: 30% !important;
+	height: auto;
+}
+.swiper-slide>div{
+	width: 100%;
+}
+.swiper-slide>div img{
+	width: 80%;
+}
+.cast-swiper .cast-p{
+	font-size: 0.25rem;
+	text-align: center !important;
+}
+.cast-swiper .act-p{
+	font-size: 0.2rem;
+	color: #888;
+	text-align: center !important;
+}
+.cast-swiper p{
+	margin: 0.07rem 0.07rem;
+}
+.cast-swiper .all-link{
+	width: 80%;
+	height: 70%;
+	background-color:  #f7f5f5;
+	display: inline-block;
+}
+.cast-swiper .all-link>div{
+	margin-top:45%;
+	color: #888;
+}
+.cast-swiper .all-link>div div{
+	width: 50%;
+	margin: 0px auto;
+}
+.cast-swiper .all-link>div div:first-child{
+	border-bottom:1px solid #ece7e7;
+	padding-bottom: 5px;
+	margin-bottom:5px;
+}
+
 </style>

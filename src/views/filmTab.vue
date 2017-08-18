@@ -9,7 +9,7 @@
 				<el-input
 			  		placeholder="电影/电视剧/影人"
 				  	icon="search"
-				  	:on-icon-click="getData">
+				  	:on-icon-click="getIntheaters">
 				</el-input>
 			</router-link> 
 		</mt-header>
@@ -30,7 +30,7 @@
 		</mt-navbar>
 		<mt-tab-container v-model="selected">
 			<mt-tab-container-item id="1">
-				<mt-cell  v-for="film in filmList" key="1" class="film-list"  to="/infoPage">
+				<mt-cell  v-for="film in intheatersList" key="1" class="film-list"  :to="{path:'/detail/'+film.id}">
 					<div style="width:30%;"><img :src="film.images.large" width="100%" height="auto"></div>
 					<div  style="width:50%;" class="info-list">
 						<p class="title-p">{{film.title}}</h4>
@@ -40,10 +40,14 @@
 							<span v-else>未有上映</span>
 						</p>
 						<p class="introduce-p">导演：
-							<span v-for="director in film.directors">{{director.name}}</span>
+							<span v-for="(director,index) in film.directors">
+								{{director.name + (index==film.directors.length-1?'':' / ')}}
+							</span>
 						</p>
 						<p class="introduce-p">主演：
-							<span v-for="cast in film.casts">{{cast.name}}&nbsp;/&nbsp;</span>
+							<span v-for="(cast,index) in film.casts">
+								{{cast.name + (index==film.casts.length-1?'':' / ')}}
+							</span>
 						</p>
 						<p class="see-p">{{film.collect_count}}人看过</p>
 					</div>
@@ -72,15 +76,17 @@
 				</div>
 				<div class="film-list" style="clear:both;">
 					<div class="show-date">8月25日，星期五</div>
-					<mt-cell  v-for="film in filmList" key="1" class="film-list">
+					<mt-cell  v-for="film in comingList" key="1" class="film-list" :to="{path:'/detail/'+film.id}">
 					<div style="width:30%;"><img :src="film.images.large" width="100%" height="auto"></div>
 					<div  style="width:50%;" class="info-list">
 						<p class="title-p">{{film.title}}</h4>
 						<p class="introduce-p">主演：
-							<span v-for="director in film.directors">{{director.name}}</span>
+							<span v-for="(director,index) in film.directors">
+								{{director.name + (index==film.directors.length-1?'':' / ')}}
+							</span>
 						</p>
 						<p class="introduce-p">主演：
-							<span v-for="cast in film.casts">{{cast.name}}&nbsp;/&nbsp;</span>
+							<span v-for="(cast,index) in film.casts">{{cast.name + (index==film.casts.length-1?'':' / ')}}</span>
 						</p>
 						<p class="see-p">{{film.collect_count}}人想看</p>
 					</div>
@@ -96,7 +102,7 @@
 </template>
 <script>
 import Vue from 'vue';
-import {api} from '../global/api';
+import {api} from '@/global/api';
 import jsonp from '@/directive/jsonp.js'
 /*import config from './js/config.js'*/
 export default {
@@ -105,32 +111,37 @@ export default {
     	return {
       		selected: '1',
       		selected2: '1',
-      		filmList:{},
+      		intheatersList:{},
+      		comingList:{},
     	}
   	},
   	methods: {
-  		divTwo(val){
-	      	return val/2;
-	    },
-  		getData(){
+	    //热映
+  		getIntheaters(){
 			/*Vue.http.get(api.in_theaters).then(function(response){
 				console.log(response.data);
 			}, function(response){
 				console.log('请求失败.');
 			})*/
-            jsonp('https://api.douban.com/v2/movie/in_theaters', { count: 10, start: this.currentPage }, function (data) {
-                this.filmList=data.subjects;
-                console.log(this.filmList);
+            jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州' }, function (data) {
+                this.intheatersList=data.subjects;
             }.bind(this));
 		},
+		//即将上映
+		getComingsoon(){
+			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州' }, function (data) {
+                this.comingList=data.subjects;
+            }.bind(this));
+		}
 
   	},
   	watch: {
-            //监测$route对象，如果发生改变，就触发request方法
-        "$route":'getData'
+        //监测$route对象，如果发生改变，就触发request方法
+        "$route":'getIntheaters'
     },
 	mounted:function(){
-	    this.getData();
+	    this.getIntheaters();
+	    this.getComingsoon();
 	},
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
 	<div class="infoPage-wrapper">
 		<mt-header title="电影" fixed>
-		  	<router-link to="/" slot="left">
-		    	<mt-button icon="back"></mt-button>
-		  	</router-link>
-		 	<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
+		 	<router-link to="/" slot="left">
+		   	<mt-button icon="back"></mt-button>
+		 	</router-link>
+			<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
 		</mt-header>
 		<div class="bg-img">
 			<img :src="filmInfo.images.large">
@@ -47,12 +47,12 @@
 		</div>
 		<div class="buyTicket-div">
 			<div>
-  				<span>
-  				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
-  			</div>
-  			<div style="float:right; ">
-  				<span class="redWord">￥27元起&nbsp;></span>
-  			</div>
+ 				<span>
+ 				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
+ 			</div>
+ 			<div style="float:right; ">
+ 				<span class="redWord">￥27元起&nbsp;></span>
+ 			</div>
 		</div>
 		<div class="detailInfo-div">
 			<div>
@@ -61,27 +61,8 @@
 			</div>
 			<div>
 				<p class="title-p">影人</p>
-			<!-- 	<p class="content-p"> -->
-					<div class="swiper-container">
-		    			<div class="swiper-wrapper cast-swiper">
-					        <div class="swiper-slide" v-for="n in 6" key="1">
-					        	<div>
-					        		<img src="../assets/image/4.jpg">
-					        		<p class="cast-p">古天乐</p>
-					        		<p class="act-p">饰：李忠志</p>
-					        	</div>
-					        </div>
-					        <div class="swiper-slide">
-					        	<a class="all-link">
-					        		<div>
-					        			<div>全部</div>
-					        			<div>15人</div>
-					        		</div>
-					        	</a>
-					        </div>
-		    			</div>
-					</div>
-				<!-- </p> -->
+				<p class="content-p">
+				</p>
 			</div>
 			<div>
 				<p class="title-p">预告片/剧照</p>
@@ -90,15 +71,32 @@
 		</div>
 		<mt-navbar v-model="selected">
 			<mt-tab-item id="1">评论</mt-tab-item>
-		  	<mt-tab-item id="2">讨论区</mt-tab-item>
+ 			<mt-tab-item id="2">讨论区</mt-tab-item>
 		</mt-navbar>
-
-
+		<div class="swiper-container">
+			<div class="swiper-wrapper cast-swiper">
+		        <div class="swiper-slide" v-for="n in 6" key="1">
+		        	<div>
+		        		<img src="../assets/image/4.jpg">
+		        		<p class="cast-p">古天乐</p>
+		        		<p class="act-p">饰：李忠志</p>
+		        	</div>
+		        </div>
+		        <div class="swiper-slide">
+		        	<a class="all-link">
+		        		<div>
+		        			<div style="font-size:12px;">全部</div>
+		        			<div style="font-size:12px;">15人</div>
+		        		</div>
+		        	</a>
+		        </div>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
 import jsonp from '@/directive/jsonp.js';
-import Swiper from '@/../static/swiper/swiper-3.4.2.min.js'
+import Swiper from '../../static/swiper/swiper-3.4.2.min.js'
 //初始化Swiper
 export default {
 	name: 'infoPage',
@@ -114,7 +112,7 @@ export default {
         	let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id;
 			jsonp(url, {city:'广州' }, function (data) {
                 this.filmInfo=data;
-                console.log("dddddddddddddd",data);
+                console.log("dddddddddddddd",this.filmInfo);
             }.bind(this));
 		}
   	},

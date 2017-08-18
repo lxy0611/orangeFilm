@@ -5,7 +5,7 @@
 				<span>广州</span>
 				<mt-button icon="back"></mt-button>
 			</router-link>
-			<router-link to="/" slot="right">
+			<router-link to="/search" slot="right">
 				<el-input
 			  		placeholder="电影/电视剧/影人"
 				  	icon="search"
@@ -136,7 +136,7 @@ export default {
 
   	},
   	watch: {
-        //监测$route对象，如果发生改变，就触发request方法
+        //监测$route对象，如果发生改变，就触发getIntheaters方法
         "$route":'getIntheaters'
     },
 	mounted:function(){

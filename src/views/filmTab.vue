@@ -26,7 +26,7 @@
 		</mt-swipe>
 		<mt-navbar v-model="selected">
 			<mt-tab-item id="1">正在热映</mt-tab-item>
-		  	<mt-tab-item id="2">即将上映</mt-tab-item>
+		  	<mt-tab-item id="2" @click.native="togger">即将上映</mt-tab-item>
 		</mt-navbar>
 		<mt-tab-container v-model="selected">
 			<mt-tab-container-item id="1">
@@ -35,7 +35,10 @@
 					<div  style="width:50%;" class="info-list">
 						<p class="title-p">{{film.title}}</h4>
 						<p class="introduce-p">
-							<el-rate v-model="film.rating.average" disabled show-text text-color="#ff9900" v-if="film.rating.average!=0">
+							<span v-if="film.rating.average!=0">
+								<Star :rating="film.rating.average"></Star>
+								<span>{{film.rating.average+(film.rating.average)?'':'.0'}}</span>
+							</span>
 							</el-rate>
 							<span v-else>未有上映</span>
 						</p>
@@ -82,7 +85,7 @@
 						<p class="title-p">{{film.title}}</h4>
 						<p class="introduce-p">主演：
 							<span v-for="(director,index) in film.directors">
-								{{director.name + (index==film.directors.length-1?'':' / ')}}
+								{{director.name}}
 							</span>
 						</p>
 						<p class="introduce-p">主演：
@@ -104,9 +107,13 @@
 import Vue from 'vue';
 import {api} from '@/global/api';
 import jsonp from '@/directive/jsonp.js'
+import Star from '@/components/Star.vue'
 /*import config from './js/config.js'*/
 export default {
 	name: 'home',
+	components: { 
+		Star,
+    },
   	data () {
     	return {
       		selected: '1',
@@ -116,6 +123,7 @@ export default {
     	}
   	},
   	methods: {
+
 	    //热映
   		getIntheaters(){
 			/*Vue.http.get(api.in_theaters).then(function(response){
@@ -123,21 +131,35 @@ export default {
 			}, function(response){
 				console.log('请求失败.');
 			})*/
+			var _this = this;
+			_this.isLoading = true;
             jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州' }, function (data) {
                 this.intheatersList=data.subjects;
             }.bind(this));
+            _this.isLoading = false;
 		},
+
 		//即将上映
 		getComingsoon(){
 			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州' }, function (data) {
                 this.comingList=data.subjects;
             }.bind(this));
+		},
+		togger(){
+			 this.getComingsoon();
 		}
 
   	},
   	watch: {
         //监测$route对象，如果发生改变，就触发getIntheaters方法
-        "$route":'getIntheaters'
+        //"$route":'getIntheaters',
+	  /*	'$route': function () {
+		    var self = this
+		    self.isLoading = true
+		    self.fetchData().then(function () {
+		      self.isLoading = false
+		    })
+		}*/
     },
 	mounted:function(){
 	    this.getIntheaters();
@@ -151,17 +173,17 @@ export default {
 	font-size: 0.35rem;
 	height: 1rem;
 }
-.mint-header .is-right{
+.film-wrapper .mint-header .is-right{
     -webkit-box-flex: none;
     -ms-flex: none;
     flex: none;
     width: 80%;
 }
-.mint-header .is-right a{
+.film-wrapper .mint-header .is-right a{
 	width: 100%;
     display: inline-block;
 }
-.el-input__icon {
+.film-wrapper .el-input__icon {
     width: 0.9rem;
 }
 .film-wrapper .mint-header .el-input{
@@ -251,12 +273,6 @@ export default {
 }
 .film-wrapper .film-list p{
 	margin: 0.2rem  0.1rem;
-}
-.film-wrapper .film-list .star-img{
-	height:  0.45rem;
-	width:  0.45rem;
-	position: relative;
-    top: -3px;
 }
 .film-wrapper .show-date{
 	background-color: #EEEEEE;

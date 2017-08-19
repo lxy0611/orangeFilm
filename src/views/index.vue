@@ -1,5 +1,5 @@
 <template>
-	<div class="app-wrapper">
+	<div class="home-wrapper">
 		<mt-tabbar fixed class="bottom-tabber">
 			<mt-tab-item id="tab1" @click.native.prevent="selected = 'tab-container1'">
 				<img slot="icon" src="../assets/image/热映.png" v-if="selected !== 'tab-container1'">
@@ -56,32 +56,33 @@ export default {
 }
 </script>
 <style>
-.app-wrapper .mint-header{
+.home-wrapper .mint-header{
 	background-color: #f9c425;
 }
-.app-wrapper .mint-tabbar{
+.home-wrapper .mint-tabbar{
 	background-color: white;
 }
-.app-wrapper .app-container{
+.home-wrapper .app-container{
 	margin-bottom:1.1rem;
 }
-.app-wrapper .mint-tab-item-icon{
+.home-wrapper .mint-tab-item-icon{
 	height: 0.5rem;
 	width: 0.5rem;
 }
-.app-wrapper *{
+.home-wrapper *{
 	font-size: 0.28rem;
 }
-.app-wrapper .mint-navbar a{
+.home-wrapper .mint-navbar a{
 	padding-bottom: 0.28rem;;
 	padding-top: 0.28rem;;
 }
-.app-wrapper .mint-tab-item-label{
+.home-wrapper .mint-tab-item-label{
 	font-size: 0.3rem;
 }
-.app-wrapper .mint-header {
+.home-wrapper .mint-header {
     background-color: #f9c425;
     font-size: 0.35rem;
     height: 1rem;
 }
+
 </style>

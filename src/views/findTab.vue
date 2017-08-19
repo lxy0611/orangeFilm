@@ -1,11 +1,11 @@
 <template>
 	<div class="find-wrapper">
 		<mt-header fixed>
-			<router-link to="/" slot="left">
+			<router-link to="/search" slot="left">
 				<el-input
 			  		placeholder="电影/电视剧/影人"
 				  	icon="search"
-				  	:on-icon-click="handleIconClick">
+				  	>
 				</el-input>
 			</router-link> 
 		</mt-header>
@@ -15,13 +15,24 @@
 		</mt-navbar>
 		<div class="swiper-container">
 		    <div class="swiper-wrapper cast-swiper">
-		        <div class="swiper-slide" v-for="n in 6" key="1">
-		        	<div>
-		        		<img src="../assets/image/4.jpg">
-		        		<p class="cast-p">古天乐{{n}}</p>
-		        		<p class="act-p">饰：李忠志</p>
-		        	</div>
-		        </div>
+		        <div class="swiper-slide" v-for="n in 3" key="n">
+		        	<div class="topTitle-div"><h3>{{topList.title}}</h3></div>
+			       	<div v-for="(top,index) in topList.subjects.slice(0,3)" key="top+index" class="list-item" >
+			       		<div style="width:10%;">1</div>
+			       		<div style="width:18%;"><img :src="top.images.large" class="banner-img"></div>
+			       		<div style="width:60%;text-align:left;">
+			       			<div>
+				        		<p class="name-p">{{top.title}}</p>
+				        		<p class="score-p">
+					        		<Star :rating="top.rating.average"></Star>
+					        		<span>{{top.rating.average}}&nbsp;</span>
+					        		<span>x人评价</span>
+				        		</p>
+				        	</div>
+				        	<div><i>></i></div>
+			        	</div>
+			       	</div>
+		       </div>
 		        <div class="swiper-slide">
 		        	<a class="all-link">
 		        		<div>
@@ -36,19 +47,34 @@
 </template>
 <script>
 import Swiper from '../../static/swiper/swiper-3.4.2.min.js'
+import jsonp from '@/directive/jsonp.js'
+import Star from '@/components/Star.vue'
 export default {
 	name: 'find',
+	components: { 
+		Star,
+    },
   	data () {
     	return {
       		selected:'1',
+      		score:6,
+      		topList:{},
     	}
   	},
   	methods: {
-  		handleIconClick(){
-  			console.log("");
-  		},
+  		//top250
+		getTop250(){
+			jsonp('https://api.douban.com/v2/movie/top250', {count:3 }, function (data) {
+                this.topList=data;
+                console.log("top250",data);
+            }.bind(this));
+		},
+		togger(){
+			 /*this.getComingsoon();*/
+		}
   	},
   	mounted:function(){
+  		this.getTop250();
 	    var mySwiper = new Swiper ('.swiper-container', {
 		    direction: 'horizontal',
 		    loop: false,
@@ -86,44 +112,45 @@ export default {
 }
 
 
-.swiper-slide{
-	width: 30% !important;
+.find-wrapper .swiper-slide{
+	width: 88% !important;
 	height: auto;
 }
-.swiper-slide>div{
+.find-wrapper .swiper-slide>div{
 	width: 100%;
 }
-.swiper-slide>div img{
+.find-wrapper .swiper-slide>div .banner-img{
 	width: 80%;
 }
-.cast-swiper .cast-p{
-	font-size: 0.25rem;
+.find-wrapper .cast-swiper .name-p{
+	font-size: 0.3rem;
 }
-.cast-swiper .act-p,{
+.find-wrapper .cast-swiper .score-p{
 	font-size: 0.2rem;
-	color: #888;
+	color: #b1b1b1;
 }
-.cast-swiper p{
+.find-wrapper .cast-swiper p{
 	margin: 0.07rem 0.07rem;
 }
-.cast-swiper .all-link{
-	width: 80%;
-	height: 70%;
-	background-color:  #f7f5f5;
-	display: inline-block;
-}
-.cast-swiper .all-link>div{
-	margin-top:45%;
-	color: #888;
-}
-.cast-swiper .all-link>div div{
-	width: 50%;
-	margin: 0px auto;
-}
-.cast-swiper .all-link>div div:first-child{
+.find-wrapper .cast-swiper .list-item div:last-child{
 	border-bottom:1px solid #ece7e7;
 	padding-bottom: 5px;
-	margin-bottom:5px;
+}
+
+.find-wrapper .cast-swiper .list-item div{
+	display: inline-block;
+}
+.find-wrapper .cast-swiper .list-item div>div{
+	height: 100%;
+}
+.find-wrapper .score-p img{
+	width: 0.25rem;
+}
+.find-wrapper .topTitle-div{
+	padding-left: 5%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: left;
 }
 
 </style>

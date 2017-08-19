@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <!-- <keep-alive> -->
+      <router-view></router-view>
+    <!-- </keep-alive> -->
   </div>
 </template>
 
@@ -24,5 +26,23 @@ body{
 }
 #app a{
   text-decoration: none;
+}
+
+.el-input__inner {
+    height: 0.78rem;
+    font-size: 0.3rem;
+}
+.el-input__icon+.el-input__inner{
+    padding-left: 0.86rem;
+}
+.el-input__icon{
+  left:0px;
+  width: 0.86rem;
+}
+.mint-header .el-input input {
+    border: none;
+}
+..mint-header.is-fixed{
+  z-index: 99;
 }
 </style>

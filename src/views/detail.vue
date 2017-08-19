@@ -27,11 +27,7 @@
 					<p>豆瓣评分</p>
 					<h3 v-if="filmInfo.rating.average!=0">{{filmInfo.rating.average}}</h3>
 					<p>
-						<img src="../assets/image/星1.png" class="star-img">
-						<img src="../assets/image/星1.png" class="star-img">
-						<img src="../assets/image/星1.png" class="star-img">
-						<img src="../assets/image/星1.png" class="star-img">
-						<img src="../assets/image/星.png" class="star-img">
+						<Star :rating="filmInfo.rating.average"></Star>
 					</p>
 					<p v-if="filmInfo.rating.average!=0">{{filmInfo.ratings_count}}人</p>
 					<p v-else>暂无评分</p>
@@ -42,7 +38,7 @@
 			<mt-button type="default" class="wantsee-btn" style="width:30%;">想看</mt-button>
 			<mt-button type="default" class="seen-btn" style="width:57%;">
 				看过
-				<img src="../assets/image/星2.png" class="star-img" v-for="n in 5" key="1">
+				<img src="../assets/image/star_border.png" class="star-img" v-for="n in 5" key="n">
 			</mt-button>
 		</div>
 		<div class="buyTicket-div">
@@ -61,8 +57,32 @@
 			</div>
 			<div>
 				<p class="title-p">影人</p>
-				<p class="content-p">
-				</p>
+				<div class="swiper-container">
+					<div class="swiper-wrapper cast-swiper">
+					 	<div class="swiper-slide" v-for="(director,index) in filmInfo.directors" key="idex">
+				        	<div>
+				        		<img :src="director.avatars.large">
+				        		<p class="cast-p">{{director.name}}</p>
+				        		<p class="act-p">导演</p>
+				        	</div>
+				        </div>
+				        <div class="swiper-slide" v-for="(cast,index) in filmInfo.casts" key="idex">
+				        	<div>
+				        		<img :src="cast.avatars.large">
+				        		<p class="cast-p">{{cast.name}}</p>
+				        		<p class="act-p">饰：李忠志</p>
+				        	</div>
+				        </div>
+				        <div class="swiper-slide">
+				        	<a class="all-link">
+				        		<div>
+				        			<div style="font-size:12px;">全部</div>
+				        			<div style="font-size:12px;">15人</div>
+				        		</div>
+				        	</a>
+				        </div>
+					</div>
+				</div>
 			</div>
 			<div>
 				<p class="title-p">预告片/剧照</p>
@@ -73,30 +93,13 @@
 			<mt-tab-item id="1">评论</mt-tab-item>
  			<mt-tab-item id="2">讨论区</mt-tab-item>
 		</mt-navbar>
-		<div class="swiper-container">
-			<div class="swiper-wrapper cast-swiper">
-		        <div class="swiper-slide" v-for="n in 6" key="1">
-		        	<div>
-		        		<img src="../assets/image/4.jpg">
-		        		<p class="cast-p">古天乐</p>
-		        		<p class="act-p">饰：李忠志</p>
-		        	</div>
-		        </div>
-		        <div class="swiper-slide">
-		        	<a class="all-link">
-		        		<div>
-		        			<div style="font-size:12px;">全部</div>
-		        			<div style="font-size:12px;">15人</div>
-		        		</div>
-		        	</a>
-		        </div>
-			</div>
-		</div>
+		
 	</div>
 </template>
 <script>
 import jsonp from '@/directive/jsonp.js';
 import Swiper from '../../static/swiper/swiper-3.4.2.min.js'
+import Star from '@/components/Star.vue'
 //初始化Swiper
 export default {
 	name: 'infoPage',
@@ -104,20 +107,34 @@ export default {
     	return {
       		selected:'1',
       		filmInfo:{},
+      		photos:{},
     	}
   	},
+ 	components: { 
+    	Star,
+    },
   	methods: {
   		//通过动态路由传参，检索某一条信息
         getData(){
         	let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id;
 			jsonp(url, {city:'广州' }, function (data) {
                 this.filmInfo=data;
-                console.log("dddddddddddddd",this.filmInfo);
             }.bind(this));
+		},
+
+		//剧照
+		getPhoto(){
+			let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id+'/photos';
+			/*jsonp(url, {city:'广州' }, function (data) {
+                this.photos=data;
+             	console.log("dddddddddddddd",data);
+            }.bind(this));*/
+
 		}
   	},
   	mounted:function(){
 	    this.getData();
+	    this.getPhoto();
 	 	var mySwiper = new Swiper ('.swiper-container', {
 		    direction: 'horizontal',
 		    loop: false,

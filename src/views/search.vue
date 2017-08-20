@@ -44,6 +44,7 @@
 <script>
 import jsonp from '@/directive/jsonp.js';
 import Swiper from '../../static/swiper/swiper-3.4.2.min.js';
+import Vue from 'vue';
 export default {
 	name: 'search',
   	data () {
@@ -68,6 +69,8 @@ export default {
   			let _this = this;
 			_this.isLoading = true;
         	let url='https://api.douban.com/v2/movie/search?q='+ val;
+        	//loading效果
+            let loading = Vue.prototype.$loading({text:"玩命加载中..."});
 			jsonp(url, {city:'广州' }, function (data) {
                 this.searchList=data;
                 console.log(this.searchList);

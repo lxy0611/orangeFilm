@@ -73,26 +73,18 @@
 				        		<p class="act-p">饰：李忠志</p>
 				        	</div>
 				        </div>
-				        <div class="swiper-slide">
-				        	<a class="all-link">
-				        		<div>
-				        			<div style="font-size:12px;">全部</div>
-				        			<div style="font-size:12px;">15人</div>
-				        		</div>
-				        	</a>
-				        </div>
 					</div>
 				</div>
 			</div>
-			<div>
+			<!-- <div>
 				<p class="title-p">预告片/剧照</p>
 				<p class="content-p"></p>
-			</div>
+			</div> -->
 		</div>
-		<mt-navbar v-model="selected">
-			<mt-tab-item id="1">评论</mt-tab-item>
- 			<mt-tab-item id="2">讨论区</mt-tab-item>
-		</mt-navbar>
+	<!-- 	<mt-navbar v-model="selected">
+		<mt-tab-item id="1">评论</mt-tab-item>
+	 			<mt-tab-item id="2">讨论区</mt-tab-item>
+	</mt-navbar> -->
 		
 	</div>
 </template>

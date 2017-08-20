@@ -42,7 +42,8 @@ body{
 .mint-header .el-input input {
     border: none;
 }
-..mint-header.is-fixed{
+.mint-header.is-fixed,.mint-tabbar.is-fixed {
   z-index: 99;
 }
+
 </style>

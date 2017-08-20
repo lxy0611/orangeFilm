@@ -37,7 +37,7 @@
 						<p class="introduce-p">
 							<span v-if="film.rating.average!=0">
 								<Star :rating="film.rating.average"></Star>
-								<span>{{film.rating.average+(film.rating.average)?'':'.0'}}</span>
+								<span>{{film.rating.average}}</span>
 							</span>
 							</el-rate>
 							<span v-else>未有上映</span>

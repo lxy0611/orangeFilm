@@ -90,6 +90,8 @@ export default {
             let loading = Vue.prototype.$loading({text:"玩命加载中..."});
 			jsonp('https://api.douban.com/'+this.listArry[0], {count:count}, function (data) {
                 this.topList=data;
+                //先结束loading效果
+                loading.close();
             }.bind(this));
 		},
 		getUs_box(){

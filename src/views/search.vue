@@ -74,6 +74,8 @@ export default {
 			jsonp(url, {city:'广州' }, function (data) {
                 this.searchList=data;
                 console.log(this.searchList);
+             	//先结束loading效果
+                loading.close();
             }.bind(this));
         	_this.isLoading = false;
 		},

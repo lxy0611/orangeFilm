@@ -135,6 +135,8 @@ export default {
             let loading = Vue.prototype.$loading({text:"玩命加载中..."});
             jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州' }, function (data) {
                 this.intheatersList=data.subjects;
+                //先结束loading效果
+                loading.close();
             }.bind(this));
 		},
 
@@ -144,6 +146,8 @@ export default {
             let loading = Vue.prototype.$loading({text:"玩命加载中..."});
 			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州' }, function (data) {
                 this.comingList=data.subjects;
+                //先结束loading效果
+                loading.close();
             }.bind(this));
 		},
 		togger(){

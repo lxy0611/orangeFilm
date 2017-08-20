@@ -100,6 +100,7 @@
 import jsonp from '@/directive/jsonp.js';
 import Swiper from '../../static/swiper/swiper-3.4.2.min.js'
 import Star from '@/components/Star.vue'
+import Vue from 'vue';
 //初始化Swiper
 export default {
 	name: 'infoPage',
@@ -116,9 +117,12 @@ export default {
   	methods: {
   		//通过动态路由传参，检索某一条信息
         getData(){
+        	//loading效果
+            let loading = Vue.prototype.$loading({text:"玩命加载中..."});
         	let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id;
 			jsonp(url, {city:'广州' }, function (data) {
                 this.filmInfo=data;
+             	loading.close();
             }.bind(this));
 		},
 

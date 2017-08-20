@@ -1,17 +1,16 @@
 <template>
 	<div class="search-wrapper">
 		<mt-header fixed>
-			<router-link to="/search" slot="left" >
+			<div  slot="left">
 				<el-input
 					v-model="inputVal"
 			  		placeholder="电影/电视剧/影人"
 				  	icon="search"
-				  	:on-icon-click="searchClick()"
-				  	@keyup.13.native="searchClick()"
+				  	@keyup.enter.native="searchClick()"
 				  	:autofocus=true
 			  	>
 				</el-input>
-			</router-link> 
+			</div>
 			<div slot="right"  @click="backClick()">
 				<span>取消</span>
 			</div>
@@ -66,18 +65,15 @@ export default {
 
   		//搜索数据
   		getData(val){
-  			let _this = this;
-			_this.isLoading = true;
         	let url='https://api.douban.com/v2/movie/search?q='+ val;
         	//loading效果
             let loading = Vue.prototype.$loading({text:"玩命加载中..."});
 			jsonp(url, {city:'广州' }, function (data) {
-                this.searchList=data;
-                console.log(this.searchList);
+				 console.log(this.searchList);
              	//先结束loading效果
                 loading.close();
+                this.searchList=data;
             }.bind(this));
-        	_this.isLoading = false;
 		},
 
 		//取消键：返回

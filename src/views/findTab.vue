@@ -87,7 +87,7 @@ export default {
 		getTop250(){
 			let count=3;
 			//loading效果
-            let loading = Vue.prototype.$loading({text:"玩命加载中..."});
+            //let loading = Vue.prototype.$loading({text:"玩命加载中..."});
 			jsonp('https://api.douban.com/'+this.listArry[0], {count:count}, function (data) {
                 this.topList=data;
             }.bind(this));
@@ -95,7 +95,7 @@ export default {
 		getUs_box(){
 			let count=3;
 			//loading效果
-            let loading = Vue.prototype.$loading({text:"玩命加载中..."});
+            //let loading = Vue.prototype.$loading({text:"玩命加载中..."});
 			jsonp('https://api.douban.com/'+this.listArry[2], {count:count}, function (data) {
                 this.us_boxList=data;
                 console.log("us_boxList",data);

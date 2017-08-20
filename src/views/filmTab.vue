@@ -132,7 +132,7 @@ export default {
 				console.log('请求失败.');
 			})*/
 			//loading效果
-            let loading = Vue.prototype.$loading({text:"玩命加载中..."});
+            //let loading = Vue.prototype.$loading({text:"玩命加载中..."});
             jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州' }, function (data) {
                 this.intheatersList=data.subjects;
             }.bind(this));
@@ -141,7 +141,7 @@ export default {
 		//即将上映
 		getComingsoon(){
 			//loading效果
-            let loading = Vue.prototype.$loading({text:"玩命加载中..."});
+            //let loading = Vue.prototype.$loading({text:"玩命加载中..."});
 			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州' }, function (data) {
                 this.comingList=data.subjects;
             }.bind(this));

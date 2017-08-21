@@ -1,17 +1,16 @@
 <template>
 	<div class="search-wrapper">
 		<mt-header fixed>
-			<router-link to="/search" slot="left" >
+			<div>
 				<el-input
 					v-model="inputVal"
 			  		placeholder="电影/电视剧/影人"
 				  	icon="search"
-				  	:on-icon-click="searchClick()"
 				  	@keyup.13.native="searchClick()"
 				  	:autofocus=true
 			  	>
 				</el-input>
-			</router-link> 
+			</div> 
 			<div slot="right"  @click="backClick()">
 				<span>取消</span>
 			</div>

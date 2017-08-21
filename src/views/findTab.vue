@@ -51,14 +51,14 @@
 			        	</div>
 			       	</div>
 		       </div>
-		        <div class="swiper-slide">
-		        	<a class="all-link">
-		        		<div>
-		        			<div>全部</div>
-		        			<div>15人</div>
-		        		</div>
-		        	</a>
-		        </div>
+		      <!--   <div class="swiper-slide">
+		      	<a class="all-link">
+		      		<div>
+		      			<div>全部</div>
+		      			<div>15人</div>
+		      		</div>
+		      	</a>
+		      </div> -->
 		    </div>
 		</div>
 	</div>

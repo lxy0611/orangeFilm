@@ -212,7 +212,6 @@ export default {
 }
 .film-wrapper .mint-swipe-item{
 	width: 100%;
-	background-color: red;
 }
 .film-wrapper .mint-swipe-items-wrap,.film-wrapper .mint-swipe,.film-wrapper .mint-swipe-item{
 	width: 100%;

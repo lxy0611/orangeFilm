@@ -70,7 +70,6 @@
 				        	<div>
 				        		<img :src="cast.avatars.large">
 				        		<p class="cast-p">{{cast.name}}</p>
-				        		<p class="act-p">饰：李忠志</p>
 				        	</div>
 				        </div>
 					</div>
@@ -283,7 +282,7 @@ export default {
 }
 
 .swiper-slide{
-	width: 30% !important;
+	width: 33.33% !important;
 	height: auto;
 }
 .swiper-slide>div{

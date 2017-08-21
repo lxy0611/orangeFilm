@@ -28,7 +28,7 @@
 			<mt-tab-item id="1">正在热映</mt-tab-item>
 		  	<mt-tab-item id="2" @click.native="togger">即将上映</mt-tab-item>
 		</mt-navbar>
-		<mt-tab-container v-model="selected">
+		<mt-tab-container v-model="selected" element-loading-text="拼命加载中" v-loading="loading">
 			<mt-tab-container-item id="1">
 				<mt-cell  v-for="film in intheatersList" key="1" class="film-list"  :to="{path:'/detail/'+film.id}">
 					<div style="width:30%;"><img :src="film.images.large" width="100%" height="auto"></div>
@@ -37,7 +37,7 @@
 						<p class="introduce-p">
 							<span v-if="film.rating.average!=0">
 								<Star :rating="film.rating.average"></Star>
-								<span>{{film.rating.average}}</span>
+								<span class="grade-span">{{film.rating.average}}</span>
 							</span>
 							</el-rate>
 							<span v-else>未有上映</span>
@@ -120,6 +120,7 @@ export default {
       		selected2: '1',
       		intheatersList:{},
       		comingList:{},
+     		loading:false,
     	}
   	},
   	methods: {
@@ -132,22 +133,22 @@ export default {
 				console.log('请求失败.');
 			})*/
 			//loading效果
-            let loading = Vue.prototype.$loading({text:"玩命加载中..."});
-            jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州' }, function (data) {
+            let _this=this;
+            _this.loading=true;
+            jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州',count: 10 }, function (data) {
+            	 //先结束loading效果
+              	_this.loading=false;
                 this.intheatersList=data.subjects;
-                //先结束loading效果
-                loading.close();
             }.bind(this));
 		},
 
 		//即将上映
 		getComingsoon(){
-			//loading效果
-            let loading = Vue.prototype.$loading({text:"玩命加载中..."});
-			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州' }, function (data) {
+			let _this=this;
+            _this.loading=true;
+			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州', count: 10 }, function (data) {
                 this.comingList=data.subjects;
-                //先结束loading效果
-                loading.close();
+            	_this.loading=false;
             }.bind(this));
 		},
 		togger(){
@@ -212,7 +213,6 @@ export default {
 }
 .film-wrapper .mint-swipe-item{
 	width: 100%;
-	background-color: red;
 }
 .film-wrapper .mint-swipe-items-wrap,.film-wrapper .mint-swipe,.film-wrapper .mint-swipe-item{
 	width: 100%;
@@ -293,5 +293,8 @@ export default {
 .film-wrapper .select-tab .mint-navbar .mint-tab-item.is-selected{
 	border-bottom: none;
 }
-
+.film-wrapper .introduce-p>span .grade-span {
+	position: relative;
+	top:3px;
+}
 </style>

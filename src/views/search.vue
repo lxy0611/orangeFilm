@@ -1,16 +1,16 @@
 <template>
 	<div class="search-wrapper">
 		<mt-header fixed>
-			<div  slot="left">
+			<div class="search-nav" slot="left">
 				<el-input
 					v-model="inputVal"
 			  		placeholder="电影/电视剧/影人"
 				  	icon="search"
-				  	@keyup.enter.native="searchClick()"
+				  	@keyup.13.native="searchClick()"
 				  	:autofocus=true
 			  	>
 				</el-input>
-			</div>
+			</div> 
 			<div slot="right"  @click="backClick()">
 				<span>取消</span>
 			</div>
@@ -21,8 +21,7 @@
 				<div  style="width:60%;" class="info-list">
 					<p class="title-p">{{film.title}}</h4>
 					<p class="introduce-p">
-						<el-rate v-model="film.rating.average" disabled show-text text-color="#ff9900" v-if="film.rating.average!=0">
-						</el-rate>
+						<Star :rating="film.rating.average" v-if="film.rating.average!=0"></Star>
 						<span v-else>暂无评分</span>
 					</p>
 					<p class="introduce-p">导演：
@@ -43,9 +42,13 @@
 <script>
 import jsonp from '@/directive/jsonp.js';
 import Swiper from '../../static/swiper/swiper-3.4.2.min.js';
+import Star from '@/components/Star.vue'
 import Vue from 'vue';
 export default {
 	name: 'search',
+	components: { 
+		Star,
+    },
   	data () {
     	return {
     		inputVal:'',
@@ -65,15 +68,18 @@ export default {
 
   		//搜索数据
   		getData(val){
+  			let _this = this;
+			_this.isLoading = true;
         	let url='https://api.douban.com/v2/movie/search?q='+ val;
         	//loading效果
             let loading = Vue.prototype.$loading({text:"玩命加载中..."});
 			jsonp(url, {city:'广州' }, function (data) {
-				 console.log(this.searchList);
+                this.searchList=data;
+                console.log(this.searchList);
              	//先结束loading效果
                 loading.close();
-                this.searchList=data;
             }.bind(this));
+        	_this.isLoading = false;
 		},
 
 		//取消键：返回
@@ -118,7 +124,7 @@ export default {
     width: 100%;
     font-size: 0.35rem;
 }
-.search-wrapper .mint-header .is-left a {
+.search-wrapper .mint-header .is-left .search-nav{
     width: 100%;
     display: inline-block;
 }
@@ -181,12 +187,7 @@ export default {
 .search-wrapper .film-list p{
 	margin: 0.2rem  0.1rem;
 }
-.search-wrapper .film-list .star-img{
-	height:  0.45rem;
-	width:  0.45rem;
-	position: relative;
-    top: -3px;
-}
+
 
 
 .search-wrapper .el-rate__icon,.search-wrapper .el-rate__text{

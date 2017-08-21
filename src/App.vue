@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <!-- <keep-alive> -->
+<!--     <keep-alive> -->
       <router-view></router-view>
-    <!-- </keep-alive> -->
-  </div>
+ <!--    </keep-alive>
+    -->  </div>
 </template>
 
 <script>
@@ -29,7 +29,7 @@ body{
 }
 
 .el-input__inner {
-    height: 0.78rem;
+    height: 0.78rem !important;
     font-size: 0.3rem;
 }
 .el-input__icon+.el-input__inner{

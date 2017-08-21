@@ -1,13 +1,19 @@
 <template>
 	<div class="infoPage-wrapper">
-		<mt-header title="电影" fixed>
+		<mt-header title="电影" fixed v-if="filmInfo.subtype==='movie'">
+		 	<router-link to="/" slot="left">
+		   	<mt-button icon="back"></mt-button>
+		 	</router-link>
+			<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
+		</mt-header>
+		<mt-header title="电视" fixed v-else>
 		 	<router-link to="/" slot="left">
 		   	<mt-button icon="back"></mt-button>
 		 	</router-link>
 			<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
 		</mt-header>
 		<div class="bg-img">
-			<img :src="filmInfo.images.large">
+			<img :src="filmInfo.images.large" id="bgImage">
 		</div>
 		<div class="info-div">
 			<div style="width:55%">
@@ -18,12 +24,11 @@
 						{{'/'+genre}}
 					</span>
 				</p>
-				<p>上映时间：2017-07-27（{{filmInfo.countries[0]}}）</p>
+				<p>上映时间：{{filmInfo.year}}（{{filmInfo.countries[0]}}）</p>
 				<p>片长：123分钟</p>
 			</div>
 			<div style="width:38%">
 				<div class="score-div">
-					<h3 v-if="filmInfo.rating.average==0"><span>&nbsp;</span></h3>
 					<p>豆瓣评分</p>
 					<h3 v-if="filmInfo.rating.average!=0">{{filmInfo.rating.average}}</h3>
 					<p>
@@ -41,7 +46,16 @@
 				<img src="../assets/image/star_border.png" class="star-img" v-for="n in 5" key="n">
 			</mt-button>
 		</div>
-		<div class="buyTicket-div">
+		<div class="buyTicket-div" v-if="filmInfo.year<year">
+			<div>
+ 				<span>
+ 				<img slot="icon" src="../assets/image/播放.png">&nbsp;&nbsp;在线观看</span>
+ 			</div>
+ 			<div style="float:right; ">
+ 				<span class="redWord">播放源&nbsp;></span>
+ 			</div>
+		</div>
+		<div class="buyTicket-div" v-else>
 			<div>
  				<span>
  				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
@@ -50,6 +64,7 @@
  				<span class="redWord">￥27元起&nbsp;></span>
  			</div>
 		</div>
+		
 		<div class="detailInfo-div">
 			<div>
 				<p class="title-p">简介</p>
@@ -70,7 +85,6 @@
 				        	<div>
 				        		<img :src="cast.avatars.large">
 				        		<p class="cast-p">{{cast.name}}</p>
-				        		<p class="act-p">饰：李忠志</p>
 				        	</div>
 				        </div>
 					</div>
@@ -91,9 +105,14 @@
 <script>
 import jsonp from '@/directive/jsonp.js';
 import Swiper from '../../static/swiper/swiper-3.4.2.min.js'
+/*import RGBaster from '@/directive/rgbaster.js'*/
 import Star from '@/components/Star.vue'
 import Vue from 'vue';
-//初始化Swiper
+
+var img = document.getElementById('bgImage');
+
+
+
 export default {
 	name: 'infoPage',
   	data () {
@@ -101,6 +120,7 @@ export default {
       		selected:'1',
       		filmInfo:{},
       		photos:{},
+      		year:'',
     	}
   	},
  	components: { 
@@ -126,9 +146,11 @@ export default {
              	console.log("dddddddddddddd",data);
             }.bind(this));*/
 
-		}
+		},
+
   	},
   	mounted:function(){
+  		this.year=2017;
 	    this.getData();
 	    this.getPhoto();
 	 	var mySwiper = new Swiper ('.swiper-container', {
@@ -136,8 +158,18 @@ export default {
 		    loop: false,
 		    slidesPerView : 3,
 			slidesPerGroup : 3,
-		})
-		},
+		});
+		/*RGBaster.colors(img, {
+		  success: function(payload) {
+		    // payload.dominant是主色，RGB形式表示
+		    // payload.secondary是次色，RGB形式表示
+		    // payload.palette是调色板，含多个主要颜色，数组
+		    console.log(payload.dominant);
+		    console.log(payload.secondary);
+		    console.log(payload.palette);
+		  }
+		});*/
+	},
 
 }
 </script>
@@ -169,14 +201,13 @@ export default {
 }
 .infoPage-wrapper .info-div{
 	text-align: left;
-	margin: 10px 10px;
 	width: 100%;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
  	-moz-box-sizing: border-box;
- 	padding-left: 10px;
-    padding-right: 10px;
-    margin-left: 10px;
+ 	padding-left:20px;
+ 	padding-right:10px;
+
 }
 .infoPage-wrapper .info-div h3{
 	color: rgb(92, 100, 107);
@@ -184,31 +215,23 @@ export default {
 }
 .infoPage-wrapper .info-div p,.infoPage-wrapper .detailInfo-div .title-p{
 	font-size: 0.28rem;
-	margin:0.2rem 0px;
 	color: #888;
+	margin: 0px;
 }
 .infoPage-wrapper .score-div{
-	position: relative;
-    top: -0.3rem;
 	min-width: 2.5rem;
 	width: 80%;
-	height: 2.5rem;
 	margin-left: 0.25rem;
 	text-align: center;
 	background-color: white;
 	box-shadow: 2px 2px 2px 2px #EEEEEE;
-    padding-bottom: 10px;
+    padding: 10px 0px;
 }
 .infoPage-wrapper .info-div>div{
 	display: inline-block;
 }
 .infoPage-wrapper .info-div div:first-child h3{
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
-.infoPage-wrapper .star-img{
-	height: 0.35rem;
-	width: 0.35rem;
+    margin: 4px auto;
 }
 .infoPage-wrapper .operbtn-div .star-img{
 	height: 0.25rem;
@@ -237,6 +260,10 @@ export default {
 }
 .infoPage-wrapper .buyTicket-div{
 	font-size: 0.35rem;
+}
+.infoPage-wrapper .buyTicket-div img{
+	position: relative;
+	top:3px;
 }
 .infoPage-wrapper .buyTicket-div>div{
 	width: 50%;
@@ -283,14 +310,19 @@ export default {
 }
 
 .swiper-slide{
-	width: 30% !important;
-	height: auto;
+	width: 33.33% !important;
 }
 .swiper-slide>div{
 	width: 100%;
 }
 .swiper-slide>div img{
 	width: 80%;
+}
+.cast-swiper{
+	margin-top: 10px;
+}
+.detailInfo-div .title-p{
+	margin-top: 10px !important;
 }
 .cast-swiper .cast-p{
 	font-size: 0.25rem;

@@ -1,6 +1,12 @@
 <template>
 	<div class="infoPage-wrapper">
-		<mt-header title="电影" fixed>
+		<mt-header title="电影" fixed v-if="filmInfo.subtype==='movie'">
+		 	<router-link to="/" slot="left">
+		   	<mt-button icon="back"></mt-button>
+		 	</router-link>
+			<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
+		</mt-header>
+		<mt-header title="电视" fixed v-else>
 		 	<router-link to="/" slot="left">
 		   	<mt-button icon="back"></mt-button>
 		 	</router-link>

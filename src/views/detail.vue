@@ -44,21 +44,22 @@
 		<div class="buyTicket-div" v-if="filmInfo.year<year">
 			<div>
  				<span>
- 				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
- 			</div>
- 			<div style="float:right; ">
- 				<span class="redWord">￥27元起&nbsp;></span>
- 			</div>
-		</div>
-		<div class="buyTicket-div" v-else>
-			<div>
- 				<span>
  				<img slot="icon" src="../assets/image/播放.png">&nbsp;&nbsp;在线观看</span>
  			</div>
  			<div style="float:right; ">
  				<span class="redWord">播放源&nbsp;></span>
  			</div>
 		</div>
+		<div class="buyTicket-div" v-else>
+			<div>
+ 				<span>
+ 				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
+ 			</div>
+ 			<div style="float:right; ">
+ 				<span class="redWord">￥27元起&nbsp;></span>
+ 			</div>
+		</div>
+		
 		<div class="detailInfo-div">
 			<div>
 				<p class="title-p">简介</p>
@@ -139,7 +140,7 @@ export default {
 		}
   	},
   	mounted:function(){
-  		this.year=Date.getFullYear();
+  		this.year=2017;
 	    this.getData();
 	    this.getPhoto();
 	 	var mySwiper = new Swiper ('.swiper-container', {

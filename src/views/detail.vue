@@ -29,7 +29,6 @@
 			</div>
 			<div style="width:38%">
 				<div class="score-div">
-					<h3 v-if="filmInfo.rating.average==0"><span>&nbsp;</span></h3>
 					<p>豆瓣评分</p>
 					<h3 v-if="filmInfo.rating.average!=0">{{filmInfo.rating.average}}</h3>
 					<p>
@@ -56,7 +55,7 @@
  				<span class="redWord">播放源&nbsp;></span>
  			</div>
 		</div>
-		<div class="buyTicket-div" v-else>
+		<div class="buyTicket-div" v-else @click="cinemaClick(filmInfo.schedule_url)">
 			<div>
  				<span>
  				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
@@ -143,6 +142,11 @@ export default {
              	console.log("dddddddddddddd",data);
             }.bind(this));*/
 
+		},
+		
+		//电影院
+		cinemaClick(url){
+			this.$router.push(url);
 		}
   	},
   	mounted:function(){
@@ -201,7 +205,8 @@ export default {
 }
 .infoPage-wrapper .info-div p,.infoPage-wrapper .detailInfo-div .title-p{
 	font-size: 0.28rem;
-	margin:0.2rem 0px;
+	margin-top:0.2rem;
+	margin-bottom:0px;
 	color: #888;
 }
 .infoPage-wrapper .score-div{
@@ -209,7 +214,7 @@ export default {
     top: -0.3rem;
 	min-width: 2.5rem;
 	width: 80%;
-	height: 2.5rem;
+	/* height: 2.5rem; */
 	margin-left: 0.25rem;
 	text-align: center;
 	background-color: white;
@@ -223,10 +228,10 @@ export default {
     margin-top: 8px;
     margin-bottom: 8px;
 }
-.infoPage-wrapper .star-img{
+/* .infoPage-wrapper .star-img{
 	height: 0.35rem;
 	width: 0.35rem;
-}
+} */
 .infoPage-wrapper .operbtn-div .star-img{
 	height: 0.25rem;
 	width: 0.25rem;

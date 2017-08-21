@@ -1,6 +1,6 @@
-# htapp
+#使用到的技术栈：vue + vue-resource + vue-router + mint-ui + element-ui + ES6 + webpack + npm
 
-> index
+测试地址:https://lxy0611.github.io/orangeFilm_demo/
 
 ## Build Setup
 

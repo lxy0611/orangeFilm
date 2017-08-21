@@ -1,6 +1,6 @@
 <template>
 	<div class="find-wrapper">
-		<mt-header fixed>
+		<!-- <mt-header fixed>
 			<router-link to="/search" slot="left">
 				<el-input
 			  		placeholder="电影/电视剧/影人"
@@ -51,16 +51,8 @@
 			        	</div>
 			       	</div>
 		       </div>
-		      <!--   <div class="swiper-slide">
-		      	<a class="all-link">
-		      		<div>
-		      			<div>全部</div>
-		      			<div>15人</div>
-		      		</div>
-		      	</a>
-		      </div> -->
 		    </div>
-		</div>
+		</div> -->
 	</div>
 </template>
 <script>

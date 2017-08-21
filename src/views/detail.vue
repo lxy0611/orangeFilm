@@ -55,7 +55,7 @@
  				<span class="redWord">播放源&nbsp;></span>
  			</div>
 		</div>
-		<div class="buyTicket-div" v-else @click="cinemaClick(filmInfo.schedule_url)">
+		<div class="buyTicket-div" v-else>
 			<div>
  				<span>
  				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
@@ -143,11 +143,7 @@ export default {
             }.bind(this));*/
 
 		},
-		
-		//电影院
-		cinemaClick(url){
-			this.$router.push(url);
-		}
+
   	},
   	mounted:function(){
   		this.year=2017;

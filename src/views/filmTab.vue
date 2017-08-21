@@ -120,6 +120,7 @@ export default {
       		selected2: '1',
       		intheatersList:{},
       		comingList:{},
+     		loading:true,
     	}
   	},
   	methods: {
@@ -136,7 +137,7 @@ export default {
             jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州' }, function (data) {
                 this.intheatersList=data.subjects;
                 //先结束loading效果
-                loading.close();
+               loading.close();
             }.bind(this));
 		},
 
@@ -144,6 +145,7 @@ export default {
 		getComingsoon(){
 			//loading效果
             let loading = Vue.prototype.$loading({text:"玩命加载中..."});
+            this.laading=true;
 			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州' }, function (data) {
                 this.comingList=data.subjects;
                 //先结束loading效果

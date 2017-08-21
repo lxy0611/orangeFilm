@@ -1,7 +1,7 @@
 <template>
 	<div class="search-wrapper">
 		<mt-header fixed>
-			<div>
+			<div class="search-nav" slot="left">
 				<el-input
 					v-model="inputVal"
 			  		placeholder="电影/电视剧/影人"
@@ -121,7 +121,7 @@ export default {
     width: 100%;
     font-size: 0.35rem;
 }
-.search-wrapper .mint-header .is-left a {
+.search-wrapper .mint-header .is-left .search-nav{
     width: 100%;
     display: inline-block;
 }

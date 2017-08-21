@@ -18,7 +18,7 @@
 						{{'/'+genre}}
 					</span>
 				</p>
-				<p>上映时间：2017-07-27（{{filmInfo.countries[0]}}）</p>
+				<p>上映时间：{{filmInfo.year}}（{{filmInfo.countries[0]}}）</p>
 				<p>片长：123分钟</p>
 			</div>
 			<div style="width:38%">
@@ -41,13 +41,22 @@
 				<img src="../assets/image/star_border.png" class="star-img" v-for="n in 5" key="n">
 			</mt-button>
 		</div>
-		<div class="buyTicket-div">
+		<div class="buyTicket-div" v-if="filmInfo.year<year">
 			<div>
  				<span>
  				<img slot="icon" src="../assets/image/票.png">&nbsp;&nbsp;选座购票</span>
  			</div>
  			<div style="float:right; ">
  				<span class="redWord">￥27元起&nbsp;></span>
+ 			</div>
+		</div>
+		<div class="buyTicket-div" v-else>
+			<div>
+ 				<span>
+ 				<img slot="icon" src="../assets/image/播放.png">&nbsp;&nbsp;在线观看</span>
+ 			</div>
+ 			<div style="float:right; ">
+ 				<span class="redWord">播放源&nbsp;></span>
  			</div>
 		</div>
 		<div class="detailInfo-div">
@@ -100,6 +109,7 @@ export default {
       		selected:'1',
       		filmInfo:{},
       		photos:{},
+      		year:'',
     	}
   	},
  	components: { 
@@ -113,6 +123,7 @@ export default {
         	let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id;
 			jsonp(url, {city:'广州' }, function (data) {
                 this.filmInfo=data;
+                console.log("什么什么鬼:",this.filmInfo);
              	loading.close();
             }.bind(this));
 		},
@@ -128,6 +139,7 @@ export default {
 		}
   	},
   	mounted:function(){
+  		this.year=Date.getFullYear();
 	    this.getData();
 	    this.getPhoto();
 	 	var mySwiper = new Swiper ('.swiper-container', {
@@ -168,14 +180,13 @@ export default {
 }
 .infoPage-wrapper .info-div{
 	text-align: left;
-	margin: 10px 10px;
 	width: 100%;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
  	-moz-box-sizing: border-box;
- 	padding-left: 10px;
-    padding-right: 10px;
-    margin-left: 10px;
+ 	padding-left:20px;
+ 	padding-right:10px;
+
 }
 .infoPage-wrapper .info-div h3{
 	color: rgb(92, 100, 107);
@@ -196,7 +207,7 @@ export default {
 	text-align: center;
 	background-color: white;
 	box-shadow: 2px 2px 2px 2px #EEEEEE;
-    padding-bottom: 10px;
+    padding: 10px 0px;
 }
 .infoPage-wrapper .info-div>div{
 	display: inline-block;

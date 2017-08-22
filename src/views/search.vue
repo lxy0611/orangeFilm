@@ -21,7 +21,10 @@
 				<div  style="width:60%;" class="info-list">
 					<p class="title-p">{{film.title}}</h4>
 					<p class="introduce-p">
-						<Star :rating="film.rating.average" v-if="film.rating.average!=0"></Star>
+						<span  v-if="film.rating.average!=0">
+							<Star :rating="film.rating.average"></Star>
+							<span class="grade-span">{{film.rating.average}}</span>
+						</span>
 						<span v-else>暂无评分</span>
 					</p>
 					<p class="introduce-p">导演：
@@ -177,7 +180,10 @@ export default {
 }
 .search-wrapper .film-list .introduce-p{
 	font-size: 0.28rem;
-
+}
+.search-wrapper .film-list .introduce-p .grade-span{
+	position: relative;
+	top:4px;
 }
 .search-wrapper .film-list .see-p{
 	font-size: 0.3rem;

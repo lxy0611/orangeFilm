@@ -205,8 +205,8 @@ export default {
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
  	-moz-box-sizing: border-box;
- 	padding-left:20px;
- 	padding-right:10px;
+ 	padding-left:0.48rem;
+ 	padding-right:0.24rem;
 
 }
 .infoPage-wrapper .info-div h3{
@@ -225,7 +225,7 @@ export default {
 	text-align: center;
 	background-color: white;
 	box-shadow: 2px 2px 2px 2px #EEEEEE;
-    padding: 10px 0px;
+   /*  padding: 10px 0px; */
 }
 .infoPage-wrapper .info-div>div{
 	display: inline-block;
@@ -261,9 +261,9 @@ export default {
 .infoPage-wrapper .buyTicket-div{
 	font-size: 0.35rem;
 }
-.infoPage-wrapper .buyTicket-div img{
+.infoPage-wrapper .buyTicket-div img,.infoPage-wrapper .buyTicket-div .redWord{
 	position: relative;
-	top:3px;
+	top:4px;
 }
 .infoPage-wrapper .buyTicket-div>div{
 	width: 50%;
@@ -274,17 +274,17 @@ export default {
 }
 .infoPage-wrapper .buyTicket-div>div:first-child{
 	text-align: left;
-	padding-left: 20px;
+	padding-left: 0.48rem;
 }
 .infoPage-wrapper .buyTicket-div>div:last-child{
 	text-align: right;
-	padding-right: 20px;
+	padding-right: 0.48rem;
 }
 .infoPage-wrapper .detailInfo-div{
 	border-top:1px solid #F1F1F1;
 }
 .infoPage-wrapper .detailInfo-div>div{
-	padding: 0px 20px;
+	padding: 0px 0.48rem;
 }
 .infoPage-wrapper .detailInfo-div p{
 	text-align: left;

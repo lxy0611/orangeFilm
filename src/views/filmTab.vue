@@ -297,4 +297,7 @@ export default {
 	position: relative;
 	top:3px;
 }
+.film-wrapper .mint-header-button.is-left{
+	padding-left: 0.12rem;
+}
 </style>

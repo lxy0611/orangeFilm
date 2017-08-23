@@ -25,6 +25,13 @@ module.exports = {
       '@': resolve('src')
     }
   },
+  externals: {
+      // jquery: 'jQuery'
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'window.$': 'jquery',
+  },
   module: {
     rules: [
      /* {

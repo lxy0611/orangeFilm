@@ -10,7 +10,6 @@ import 'element-ui/lib/theme-default/index.css'
 import './directive/rem'
 import './directive/jquery-3.1.1'
 import vueResource from 'vue-resource'
-import focus from './directive/focus'
 import VueRouter from 'vue-router'
 import './assets/css/swiper-3.4.2.min.css'
 
@@ -18,9 +17,7 @@ Vue.config.productionTip = false
 Vue.use(MintUI)
 Vue.use(ElementUI)
 Vue.use(vueResource)
-
 Vue.use(VueRouter)
-Vue.use(focus)
 
 new Vue({
   el: '#app',

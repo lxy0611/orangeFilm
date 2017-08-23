@@ -1,6 +1,6 @@
 <template>
 	<div class="infoPage-wrapper">
-		<mt-header title="电影" fixed v-if="filmInfo.subtype==='movie'">
+		<mt-header title="电影" fixed v-if="filmInfo.subtype==='movie'" class="header-nav">
 		 	<router-link to="/" slot="left">
 		   	<mt-button icon="back"></mt-button>
 		 	</router-link>
@@ -105,13 +105,8 @@
 <script>
 import jsonp from '@/directive/jsonp.js';
 import Swiper from '../../static/swiper/swiper-3.4.2.min.js'
-/*import RGBaster from '@/directive/rgbaster.js'*/
 import Star from '@/components/Star.vue'
 import Vue from 'vue';
-
-var img = document.getElementById('bgImage');
-
-
 
 export default {
 	name: 'infoPage',
@@ -148,6 +143,26 @@ export default {
 
 		},
 
+		//窗口滚动实现样式变动
+		handleScroll () {
+		    console.log("hahahahah");
+			var infoTop=$(".info-div").offset().top;
+			console.log("infoTop:",infoTop);
+			$(window).scroll(function(){
+				let winTop = $(this).scrollTop();
+				console.log("winTop:",winTop);
+				if(winTop >=infoTop){
+					$(".infoPage-wrapper .mint-header").css({"background":"#97B5B5"});
+				}
+				else if(winTop >0){
+					$(".infoPage-wrapper .mint-header").css({"background":"rgba(255,255,255,0.3)"});
+				}
+				else{
+					$("..infoPage-wrapper .mint-header").css({"background":"rgba(255,255,255,0)"});
+				}
+			})
+	  	}
+
   	},
   	mounted:function(){
   		this.year=2017;
@@ -164,6 +179,7 @@ export default {
   		this.year=2017;
 	    this.getData();
 	    this.getPhoto();
+	    this.handleScroll();
 	 	var mySwiper = new Swiper ('.swiper-container', {
 		    direction: 'horizontal',
 		    loop: false,

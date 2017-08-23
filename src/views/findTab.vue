@@ -100,14 +100,14 @@ export default {
 		}
   	},
   	mounted:function(){
-  		this.getTop250();
+  		/*this.getTop250();
   		this.getUs_box();
 	    var mySwiper = new Swiper ('.swiper-container', {
 		    direction: 'horizontal',
 		    loop: false,
 		    slidesPerView : 3,
 			slidesPerGroup : 3,
-		})
+		})*/
 		},
 
 }

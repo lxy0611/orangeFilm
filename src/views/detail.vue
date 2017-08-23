@@ -159,17 +159,19 @@ export default {
 		    slidesPerView : 3,
 			slidesPerGroup : 3,
 		});
-		/*RGBaster.colors(img, {
-		  success: function(payload) {
-		    // payload.dominant是主色，RGB形式表示
-		    // payload.secondary是次色，RGB形式表示
-		    // payload.palette是调色板，含多个主要颜色，数组
-		    console.log(payload.dominant);
-		    console.log(payload.secondary);
-		    console.log(payload.palette);
-		  }
-		});*/
 	},
+	activated:function(){
+  		this.year=2017;
+	    this.getData();
+	    this.getPhoto();
+	 	var mySwiper = new Swiper ('.swiper-container', {
+		    direction: 'horizontal',
+		    loop: false,
+		    slidesPerView : 3,
+			slidesPerGroup : 3,
+		});
+	},
+
 
 }
 </script>
@@ -225,7 +227,7 @@ export default {
 	text-align: center;
 	background-color: white;
 	box-shadow: 2px 2px 2px 2px #EEEEEE;
-   /*  padding: 10px 0px; */
+    padding: 10px 0px; 
 }
 .infoPage-wrapper .info-div>div{
 	display: inline-block;

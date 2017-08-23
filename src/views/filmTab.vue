@@ -24,10 +24,11 @@
 		  		<img src="../assets/image/3.jpg">
 		  	</mt-swipe-item>
 		</mt-swipe>
-		<mt-navbar v-model="selected">
+		<mt-navbar v-model="selected" class="nav-menu">
 			<mt-tab-item id="1">正在热映</mt-tab-item>
-		  	<mt-tab-item id="2" @click.native="togger">即将上映</mt-tab-item>
+		  	<mt-tab-item id="2" >即将上映</mt-tab-item>
 		</mt-navbar>
+		<!-- <div style="width:100%;height:16rem;"></div> -->
 		<mt-tab-container v-model="selected" element-loading-text="拼命加载中" v-loading="loading">
 			<mt-tab-container-item id="1">
 				<mt-cell  v-for="film in intheatersList" key="1" class="film-list"  :to="{path:'/detail/'+film.id}">
@@ -103,12 +104,13 @@
 
 	</div>
 </template>
+<!-- <script  src="../directive/animation.js"></script> -->
 <script>
 import Vue from 'vue';
 import {api} from '@/global/api';
-import jsonp from '@/directive/jsonp.js'
-import Star from '@/components/Star.vue'
-/*import config from './js/config.js'*/
+import jsonp from '@/directive/jsonp.js';
+import  '@/directive/animation.js';
+import Star from '@/components/Star.vue';
 export default {
 	name: 'home',
 	components: { 
@@ -121,6 +123,7 @@ export default {
       		intheatersList:{},
       		comingList:{},
      		loading:false,
+     		scrolled:false,
     	}
   	},
   	methods: {
@@ -151,25 +154,24 @@ export default {
             	_this.loading=false;
             }.bind(this));
 		},
-		togger(){
-			 this.getComingsoon();
-		}
 
+		handleScroll () {
+		    console.log(window.scrollY);
+
+		  }
   	},
   	watch: {
         //监测$route对象，如果发生改变，就触发getIntheaters方法
-        //"$route":'getIntheaters',
-	  /*	'$route': function () {
-		    var self = this
-		    self.isLoading = true
-		    self.fetchData().then(function () {
-		      self.isLoading = false
-		    })
-		}*/
+        "$route":'getIntheaters',
     },
 	mounted:function(){
-	    this.getIntheaters();
-	    this.getComingsoon();
+	   this.getIntheaters();
+	   this.getComingsoon();
+	   //window.addEventListener('scroll', this.handleScroll);
+	},
+	activated:function(){
+	   this.getIntheaters();
+	   this.getComingsoon();
 	},
 }
 </script>
@@ -216,11 +218,11 @@ export default {
 }
 .film-wrapper .mint-swipe-items-wrap,.film-wrapper .mint-swipe,.film-wrapper .mint-swipe-item{
 	width: 100%;
-	height: 3.8rem;
+	height: 4rem;
 } 
 .film-wrapper .mint-swipe img{
 	width: 100%;
-	height: auto;
+	height: 100%;
 }
 .film-wrapper .mint-navbar .mint-tab-item{
 	color:#6b747d;
@@ -235,10 +237,12 @@ export default {
 	font-size: 0.28rem;
 }
 .film-wrapper .mint-cell-value button{
-    width: 1.2rem;
     height: 0.7rem;
 	font-weight: bolder;
 	background-color: white;
+}
+.film-wrapper .mint-button--normal{
+	padding:0 0.25rem;
 }
 .film-wrapper .buyTicket-btn{
 	color: #ec294f;

@@ -145,8 +145,7 @@ export default {
 
 		//窗口滚动实现样式变动
 		handleScroll () {
-		    console.log("hahahahah");
-			var infoTop=$(".info-div").offset().top;
+			let infoTop=$(".info-div").offset().top;
 			console.log("infoTop:",infoTop);
 			$(window).scroll(function(){
 				let winTop = $(this).scrollTop();
@@ -158,34 +157,35 @@ export default {
 					$(".infoPage-wrapper .mint-header").css({"background":"rgba(255,255,255,0.3)"});
 				}
 				else{
-					$("..infoPage-wrapper .mint-header").css({"background":"rgba(255,255,255,0)"});
+					$(".infoPage-wrapper .mint-header").css({"background":"rgba(255,255,255,0)"});
 				}
 			})
+	  	},
+
+	  	//初始化
+	  	init(){
+	  		this.year=2017;
+		    this.getData();
+		    this.getPhoto();
+		 	var mySwiper = new Swiper ('.swiper-container', {
+			    direction: 'horizontal',
+			    loop: false,
+			    slidesPerView : 3,
+				slidesPerGroup : 3,
+			});
 	  	}
 
   	},
   	mounted:function(){
-  		this.year=2017;
-	    this.getData();
-	    this.getPhoto();
-	 	var mySwiper = new Swiper ('.swiper-container', {
-		    direction: 'horizontal',
-		    loop: false,
-		    slidesPerView : 3,
-			slidesPerGroup : 3,
-		});
+  		this.init();
 	},
 	activated:function(){
-  		this.year=2017;
-	    this.getData();
-	    this.getPhoto();
-	    this.handleScroll();
-	 	var mySwiper = new Swiper ('.swiper-container', {
-		    direction: 'horizontal',
-		    loop: false,
-		    slidesPerView : 3,
-			slidesPerGroup : 3,
-		});
+  		this.init();
+  		let _this=this;
+  		setTimeout(function(){
+  			_this.handleScroll();
+  		},1000);
+  		
 	},
 
 
@@ -193,9 +193,10 @@ export default {
 </script>
 <style>
 .infoPage-wrapper .mint-header{
-	padding-top:  0.25rem;;
+	padding:  0.25rem auto;
 	background: rgba(255,255,255,0);
 	font-size: 0.35rem;
+    height: 0.95rem;
 }
 .infoPage-wrapper .el-icon-share{
 	margin-right: 10px;

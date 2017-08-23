@@ -28,7 +28,7 @@
 			<mt-tab-item id="1">正在热映</mt-tab-item>
 		  	<mt-tab-item id="2" >即将上映</mt-tab-item>
 		</mt-navbar>
-		<div style="width:100%;height:16rem;"></div>
+		<!-- <div style="width:100%;height:16rem;"></div> -->
 		<mt-tab-container v-model="selected" element-loading-text="拼命加载中" v-loading="loading">
 			<mt-tab-container-item id="1">
 				<mt-cell  v-for="film in intheatersList" key="1" class="film-list"  :to="{path:'/detail/'+film.id}">
@@ -104,12 +104,10 @@
 
 	</div>
 </template>
-<!-- <script  src="../directive/animation.js"></script> -->
 <script>
 import Vue from 'vue';
 import {api} from '@/global/api';
 import jsonp from '@/directive/jsonp.js';
-// import  '@/directive/filmTab-animation.js';
 import Star from '@/components/Star.vue';
 export default {
 	name: 'home',
@@ -157,13 +155,13 @@ export default {
 
 		//窗口滚动实现样式变动
 		handleScroll () {
-		    var bannerTop=$(".banner-swipe").offset().top;
-		   	var navTop = $(".nav-menu").offset().top;
-		   	//console.log("bannerTop:",bannerTop);
-		   	//console.log("navTop:",navTop);
+		    let bannerTop=$(".banner-swipe").offset().top;
+		   	let navTop = $(".nav-menu").offset().top;
+		  /* 	console.log("bannerTop:",bannerTop);
+		   	console.log("navTop:",navTop);*/
 		   	$(window).scroll(function(){
 		   		let winTop = $(this).scrollTop();
-		   		console.log("winTop:",winTop);
+		   		/*console.log("winTop:",winTop);*/
 		   		if(winTop >= navTop-bannerTop){
 			   		$(".nav-menu").css({"position":"fixed","top":"1rem","z-index":"99","width":"100%"});
 			   	}
@@ -171,6 +169,12 @@ export default {
 			   		$(".nav-menu").css({"position":"static"});
 			   	}
 		   	})
+	  	},
+
+	  	//初始化
+	  	init(){
+  		 	this.getIntheaters();
+		   	this.getComingsoon();
 	  	}
   	},
   	watch: {
@@ -178,14 +182,14 @@ export default {
         "$route":'getIntheaters',
     },
 	mounted:function(){
-	   this.getIntheaters();
-	   this.getComingsoon();
+	  this.init();
 	},
 	activated:function(){
-	   this.getIntheaters();
-	   this.getComingsoon();
-	   this.handleScroll();
-	   
+	  	this.init();
+  		let _this=this;
+  		setTimeout(function(){
+  			_this.handleScroll();
+  		},1000);
 	},
 }
 </script>

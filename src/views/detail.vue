@@ -116,6 +116,7 @@ export default {
       		filmInfo:{},
       		photos:{},
       		year:'',
+      		bgcolor:'',
     	}
   	},
  	components: { 
@@ -133,7 +134,7 @@ export default {
             }.bind(this));
 		},
 
-		//剧照
+		//剧照  mark接口访问报错
 		getPhoto(){
 			let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id+'/photos';
 			/*jsonp(url, {city:'广州' }, function (data) {
@@ -143,14 +144,16 @@ export default {
 
 		},
 
-		//窗口滚动实现样式变动
+		//窗口滚动实现样式变化
 		handleScroll () {
 			let infoTop=$(".info-div").offset().top;
 			//console.log("infoTop:",infoTop);
+			let _this=this;
 			$(window).scroll(function(){
+				console.log("滚动：",_this.bgcolor);
 				let winTop = $(this).scrollTop();
 				if(winTop >=infoTop){
-					$(".infoPage-wrapper .mint-header").css({"background":"#97B5B5"});
+					$(".infoPage-wrapper .mint-header").css({"background":_this.bgcolor});
 				}
 				else if(winTop >0){
 					$(".infoPage-wrapper .mint-header").css({"background":"rgba(255,255,255,0.3)"});
@@ -159,6 +162,18 @@ export default {
 					$(".infoPage-wrapper .mint-header").css({"background":"rgba(255,255,255,0)"});
 				}
 			})
+	  	},
+
+	  	//得到背景图片色
+	  	getBgcolor(){
+	  		let _this=this;
+	  		$.adaptiveBackground.run({
+	  			 success: function($img, data) {
+	  			 	_this.bgcolor=data.color;
+				    console.log('Success!', $img, data);
+				    console.log('bgcolor!', _this.bgcolor);
+				  }
+	  		});	
 	  	},
 
 	  	//初始化
@@ -172,7 +187,7 @@ export default {
 			    slidesPerView : 3,
 				slidesPerGroup : 3,
 			});
-			$.adaptiveBackground.run();
+			
 	  	}
 
   	},
@@ -184,6 +199,7 @@ export default {
   		let _this=this;
   		setTimeout(function(){
   			_this.handleScroll();
+  			_this.getBgcolor();
   		},1000);
 	},
 

@@ -1,5 +1,4 @@
 (function ($) {
-  console.log("为什么????？");
   /* Constants & defaults. */
   var DATA_COLOR = 'data-ab-color';
   var DATA_PARENT = 'data-ab-parent';
@@ -43,7 +42,7 @@
   */
   $.adaptiveBackground = {
     run: function (options) {
-       
+
       var opts = $.extend({}, DEFAULTS, options);
 
       /* Loop over each element, waiting for it to load

@@ -13,7 +13,7 @@
 			<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
 		</mt-header>
 		<div class="bg-img">
-			<img :src="filmInfo.images.large" id="bgImage">
+			<img :src="filmInfo.images.large" id="bgImage" data-adaptive-background>
 		</div>
 		<div class="info-div">
 			<div style="width:55%">
@@ -146,10 +146,9 @@ export default {
 		//窗口滚动实现样式变动
 		handleScroll () {
 			let infoTop=$(".info-div").offset().top;
-			console.log("infoTop:",infoTop);
+			//console.log("infoTop:",infoTop);
 			$(window).scroll(function(){
 				let winTop = $(this).scrollTop();
-				console.log("winTop:",winTop);
 				if(winTop >=infoTop){
 					$(".infoPage-wrapper .mint-header").css({"background":"#97B5B5"});
 				}
@@ -173,6 +172,7 @@ export default {
 			    slidesPerView : 3,
 				slidesPerGroup : 3,
 			});
+			$.adaptiveBackground.run();
 	  	}
 
   	},
@@ -185,7 +185,6 @@ export default {
   		setTimeout(function(){
   			_this.handleScroll();
   		},1000);
-  		
 	},
 
 

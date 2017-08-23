@@ -157,11 +157,8 @@ export default {
 		handleScroll () {
 		    let bannerTop=$(".banner-swipe").offset().top;
 		   	let navTop = $(".nav-menu").offset().top;
-		  /* 	console.log("bannerTop:",bannerTop);
-		   	console.log("navTop:",navTop);*/
 		   	$(window).scroll(function(){
 		   		let winTop = $(this).scrollTop();
-		   		/*console.log("winTop:",winTop);*/
 		   		if(winTop >= navTop-bannerTop){
 			   		$(".nav-menu").css({"position":"fixed","top":"1rem","z-index":"99","width":"100%"});
 			   	}

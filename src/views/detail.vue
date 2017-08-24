@@ -1,5 +1,5 @@
 <template>
-	<div class="infoPage-wrapper">
+	<div class="infoPage-wrapper" v-cloak>
 		<mt-header title="电影" fixed v-if="filmInfo.subtype==='movie'" class="header-nav">
 		 	<router-link to="/" slot="left">
 		   	<mt-button icon="back"></mt-button>
@@ -134,20 +134,9 @@ export default {
             }.bind(this));
 		},
 
-		//剧照  mark接口访问报错
-		getPhoto(){
-			let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id+'/photos';
-			/*jsonp(url, {city:'广州' }, function (data) {
-                this.photos=data;
-             	console.log("dddddddddddddd",data);
-            }.bind(this));*/
-
-		},
-
 		//窗口滚动实现样式变化
 		handleScroll () {
 			let infoTop=$(".info-div").offset().top;
-			//console.log("infoTop:",infoTop);
 			let _this=this;
 			$(window).scroll(function(){
 				console.log("滚动：",_this.bgcolor);
@@ -180,7 +169,6 @@ export default {
 	  	init(){
 	  		this.year=2017;
 		    this.getData();
-		    this.getPhoto();
 		 	var mySwiper = new Swiper ('.swiper-container', {
 			    direction: 'horizontal',
 			    loop: false,
@@ -191,16 +179,25 @@ export default {
 	  	}
 
   	},
-  	mounted:function(){
-  		this.init();
-	},
-	activated:function(){
-  		this.init();
+  	//页面渲染前获得数据
+  	created:function() {
   		let _this=this;
-  		setTimeout(function(){
-  			_this.handleScroll();
-			_this.getBgcolor();	
-  		},1000);
+	    //this.$nextTick(function () {
+	     	_this.init();
+	    //})
+  	},
+  	//页面渲染后得到相应的操作
+  	mounted:function(){
+  		let _this=this;
+  		this.$nextTick(function () {
+	  		setTimeout(function(){
+	  			_this.handleScroll();
+				_this.getBgcolor();	
+	  		},1000);
+	  	})
+	},
+	beforeDestroy:function(){
+  		
 	},
 	watch: {
         //监测$route对象，如果发生改变，就触发getIntheaters方法
@@ -394,4 +391,8 @@ export default {
 	margin-bottom:5px;
 }
 
+
+[v-cloak] {
+  display: none;
+}
 </style>

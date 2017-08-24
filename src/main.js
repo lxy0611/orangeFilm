@@ -13,13 +13,14 @@ import './directive/adaptive-backgrounds'
 import vueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import './assets/css/swiper-3.4.2.min.css'
+import Navigation from 'vue-navigation'
 
 Vue.config.productionTip = false
 Vue.use(MintUI)
 Vue.use(ElementUI)
 Vue.use(vueResource)
 Vue.use(VueRouter)
-
+Vue.use(Navigation, {router})
 new Vue({
   el: '#app',
   router,

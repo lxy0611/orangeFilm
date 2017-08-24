@@ -180,13 +180,14 @@ export default {
     },
 	mounted:function(){
 	  this.init();
-	},
-	activated:function(){
-	  	this.init();
-  		let _this=this;
+	  let _this=this;
   		setTimeout(function(){
   			_this.handleScroll();
   		},1000);
+	},
+	activated:function(){
+	  	
+  		
 	},
 }
 </script>

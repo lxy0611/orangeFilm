@@ -18,17 +18,18 @@
 			</mt-tab-item>
 		</mt-tabbar>
 		<div class="app-container">
-			<mt-tab-container class="page-tabbar-tab-container" v-model="selected" swipeable>  
-		        <mt-tab-container-item id="tab-container1">  
-		            <filmTab></filmTab> 
-		        </mt-tab-container-item>  
-		        <mt-tab-container-item id="tab-container2">  
-		            <findTab></findTab>   
-		        </mt-tab-container-item>  
-		        <mt-tab-container-item id="tab-container3">  
-		            <meTab></meTab>  
-		        </mt-tab-container-item>  
-	      </mt-tab-container>  
+		<filmTab></filmTab> 
+			<!-- <mt-tab-container class="page-tabbar-tab-container" v-model="selected" swipeable>  
+					        <mt-tab-container-item id="tab-container1">  
+					            <filmTab></filmTab> 
+					        </mt-tab-container-item>  
+					        <mt-tab-container-item id="tab-container2">  
+					            <findTab></findTab>   
+					        </mt-tab-container-item>  
+					        <mt-tab-container-item id="tab-container3">  
+					            <meTab></meTab>  
+					        </mt-tab-container-item>  
+				      </mt-tab-container>   -->
 		</div>
 	</div>
 </template>

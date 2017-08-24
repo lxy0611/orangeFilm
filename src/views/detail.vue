@@ -200,6 +200,7 @@ export default {
   		setTimeout(function(){
   			_this.handleScroll();
   			_this.getBgcolor();
+  			
   		},1000);
 	},
 

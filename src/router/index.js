@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import Index from '@/views/index'
+import Home from '@/views/home'
 import DetailPage from '@/views/detail'
 import SearchPage from '@/views/search'
 Vue.use(Router)
@@ -10,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
-      component: Index,
+      name: 'Home',
+      component: Home,
     },
     { 
     	path: '/detail/:id', 

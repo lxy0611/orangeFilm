@@ -199,10 +199,13 @@ export default {
   		let _this=this;
   		setTimeout(function(){
   			_this.handleScroll();
-  			_this.getBgcolor();
-  			
+			_this.getBgcolor();	
   		},1000);
 	},
+	watch: {
+        //监测$route对象，如果发生改变，就触发getIntheaters方法
+        "$route":'getData',
+    },
 
 
 }

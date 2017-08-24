@@ -92,7 +92,11 @@ export default {
 
   	},
   	mounted:function(){
-	}
+	},
+	watch: {
+	    //监测$route对象，如果发生改变，就触发getIntheaters方法
+	    //"$route":'getData',
+    },
 }
 </script>
 <style>

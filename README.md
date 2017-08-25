@@ -1,6 +1,6 @@
 #使用到的技术栈：vue + vue-resource + vue-router + mint-ui + element-ui + ES6 + webpack + npm
 
-测试地址:https://lxy0611.github.io/orangeFilm_demo/
+[预览地址](https://lxy0611.github.io/orangeFilm_demo/)
 
 #注意：1、由于使用的是豆瓣电影的在线接口，所以有的时候会无法访问，希望谅解！
       2、更多开发，会不定时更新

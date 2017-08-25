@@ -2,6 +2,8 @@
 
 测试地址:https://lxy0611.github.io/orangeFilm_demo/
 
+#注意：由于使用的是豆瓣电影的在线接口，所以有的时候会无法访问，希望谅解！
+
 ## Build Setup
 
 ``` bash

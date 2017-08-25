@@ -126,12 +126,11 @@ export default {
       			rating:{
       				average:null,
       			}
-
-
       		},
       		photos:{},
       		year:'',
       		bgcolor:'',
+      		mark:false,
     	}
   	},
  	components: { 
@@ -142,8 +141,10 @@ export default {
         getData(){
         	//loading效果
             let loading = Vue.prototype.$loading({text:"玩命加载中..."});
+            this.mark=false;
         	let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id;
 			jsonp(url, {city:'广州' }, function (data) {
+				this.mark=true;
                 this.filmInfo=data;
             	console.log("filmInfo",this.filmInfo);
              	loading.close();
@@ -155,7 +156,7 @@ export default {
 			let infoTop=$(".info-div").offset().top;
 			let _this=this;
 			$(window).scroll(function(){
-				console.log("滚动：",_this.bgcolor);
+				//console.log("滚动：",_this.bgcolor);
 				let winTop = $(this).scrollTop();
 				if(winTop >=infoTop){
 					$(".infoPage-wrapper .mint-header").css({"background":_this.bgcolor});
@@ -175,8 +176,8 @@ export default {
 	  		$.adaptiveBackground.run({
 	  			 success: function($img, data) {
 	  			 	_this.bgcolor=data.color;
-				    console.log('Success!', $img, data);
-				    console.log('bgcolor!', _this.bgcolor);
+				    //console.log('Success!', $img, data);
+				    //console.log('bgcolor!', _this.bgcolor);
 				  }
 	  		});	
 	  	},
@@ -187,26 +188,25 @@ export default {
 		    this.getData();
 		 	var mySwiper = new Swiper ('.swiper-container', {
 			    direction: 'horizontal',
-			    loop: false,
+			   /* loop: false,
 			    slidesPerView : 3,
-				slidesPerGroup : 3,
+				slidesPerGroup : 3,*/
 			});
 			
 	  	}
 
   	},
   	//页面渲染前获得数据
-  	/*created:function() {
-  		let _this=this;
+  	created:function() {
 	    this.$nextTick(function () {
-	     	_this.init();
+	     	this.init();
 	    })
-  	},*/
+  	},
   	//页面渲染后得到相应的操作
-  	mounted:function(){
+  	/*mounted:function(){
   		let _this=this;
   		_this.init();
-	},
+	},*/
 	beforeDestroy:function(){
   		
 	},
@@ -214,8 +214,10 @@ export default {
         //监测filmInfo，如果发生改变，就触发handleScroll,getBgcolor方法
         filmInfo:function(){
         	this.$nextTick(function () {
-     			this.handleScroll();
-				this.getBgcolor();	
+        		if(this.mark==true){
+	     			this.handleScroll();
+					this.getBgcolor();
+				}	
 	        })
         }
     },

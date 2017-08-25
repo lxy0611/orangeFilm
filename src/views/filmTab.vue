@@ -136,7 +136,7 @@ export default {
 			//loading效果
             let _this=this;
             _this.loading=true;
-            jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州',count: 10 }, function (data) {
+            jsonp('https://api.douban.com/v2/movie/in_theaters', {city:'广州',count: 15 }, function (data) {
             	 //先结束loading效果
               	_this.loading=false;
                 this.intheatersList=data.subjects;
@@ -147,7 +147,7 @@ export default {
 		getComingsoon(){
 			let _this=this;
             _this.loading=true;
-			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州', count: 10 }, function (data) {
+			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州', count: 15 }, function (data) {
                 this.comingList=data.subjects;
             	_this.loading=false;
             }.bind(this));
@@ -176,7 +176,18 @@ export default {
   	},
   	watch: {
         //监测$route对象，如果发生改变，就触发getIntheaters方法
-        "$route":'getIntheaters',
+        //"$route":'getIntheaters',
+        //监测intheatersList，如果发生改变，就触发handleScroll,getBgcolor方法
+        intheatersList:function(){
+        	this.$nextTick(function () {
+     			this.handleScroll();
+	        })
+        },
+        comingList:function(){
+        	this.$nextTick(function () {
+     			this.handleScroll();
+	        })
+        },
     },
 	mounted:function(){
 	  this.init();
@@ -184,10 +195,6 @@ export default {
   		setTimeout(function(){
   			_this.handleScroll();
   		},1000);
-	},
-	activated:function(){
-	  	
-  		
 	},
 }
 </script>

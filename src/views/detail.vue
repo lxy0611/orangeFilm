@@ -99,6 +99,7 @@
 		<mt-tab-item id="1">评论</mt-tab-item>
 	 			<mt-tab-item id="2">讨论区</mt-tab-item>
 	</mt-navbar> -->
+	</div>
 		
 	</div>
 </template>
@@ -113,7 +114,21 @@ export default {
   	data () {
     	return {
       		selected:'1',
-      		filmInfo:{},
+      		filmInfo:{
+      			images:{
+      				large: null
+      			},
+      			year:null,
+      			title:null,
+      			genres:null,
+      			countries:[],
+      			subtype:null,
+      			rating:{
+      				average:null,
+      			}
+
+
+      		},
       		photos:{},
       		year:'',
       		bgcolor:'',
@@ -130,6 +145,7 @@ export default {
         	let url='https://api.douban.com/v2/movie/subject/'+ this.$route.params.id;
 			jsonp(url, {city:'广州' }, function (data) {
                 this.filmInfo=data;
+            	console.log("filmInfo",this.filmInfo);
              	loading.close();
             }.bind(this));
 		},
@@ -180,28 +196,28 @@ export default {
 
   	},
   	//页面渲染前获得数据
-  	created:function() {
+  	/*created:function() {
   		let _this=this;
-	    //this.$nextTick(function () {
+	    this.$nextTick(function () {
 	     	_this.init();
-	    //})
-  	},
+	    })
+  	},*/
   	//页面渲染后得到相应的操作
   	mounted:function(){
   		let _this=this;
-  		this.$nextTick(function () {
-	  		setTimeout(function(){
-	  			_this.handleScroll();
-				_this.getBgcolor();	
-	  		},1000);
-	  	})
+  		_this.init();
 	},
 	beforeDestroy:function(){
   		
 	},
 	watch: {
-        //监测$route对象，如果发生改变，就触发getIntheaters方法
-        "$route":'getData',
+        //监测filmInfo，如果发生改变，就触发handleScroll,getBgcolor方法
+        filmInfo:function(){
+        	this.$nextTick(function () {
+     			this.handleScroll();
+				this.getBgcolor();	
+	        })
+        }
     },
 
 
@@ -224,7 +240,8 @@ export default {
 .infoPage-wrapper .bg-img{
 	width: 100%;
 	padding-bottom: 20px;
-	background-color: #97B5B5;
+	/*background-color: #97B5B5;*/
+	background-color: white;
 }
 .infoPage-wrapper .bg-img img{
 	width:70%;

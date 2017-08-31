@@ -74,19 +74,26 @@
 				<p class="title-p">影人</p>
 				<div class="swiper-container">
 					<div class="swiper-wrapper cast-swiper">
-					 	<div class="swiper-slide" v-for="(director,index) in filmInfo.directors" key="idex">
+					   <div class="swiper-slide" v-for="(director,index) in filmInfo.directors" key="idex">
 				        	<div>
 				        		<img v-if="director.avatars!==null && director.avatars.large!==null" :src="director.avatars.large">
 				        		<p class="cast-p">{{director.name}}</p>
 				        		<p class="act-p">导演</p>
 				        	</div>
 				        </div>
-				        <div class="swiper-slide" v-for="(cast,index) in filmInfo.casts" key="idex">
-				        	<div>
-				        		<img  v-if="cast.avatars!==null && cast.avatars.large!==null"  :src="cast.avatars.large">
-				        		<p class="cast-p">{{cast.name}}</p>
+				       <div class="swiper-slide" v-for="(cast,index) in filmInfo.casts" key="idex">
+				       	<div>
+				       		<img  v-if="cast.avatars!==null && cast.avatars.large!==null"  :src="cast.avatars.large">
+				       		<p class="cast-p">{{cast.name}}</p>
+				       	</div>  
+				       </div>
+				        <div class="swiper-slide">
+				        	<div style="width:80%;" class="all-link">
+				        		<div>全部</div>
+								<div>16人</div>
 				        	</div>
 				        </div>
+                       <div class="swiper-slide" v-for="n in 6" :key="n"></div>
 					</div>
 				</div>
 			</div>
@@ -125,12 +132,13 @@ export default {
       			subtype:null,
       			rating:{
       				average:null,
-      			}
+      			},
       		},
       		photos:{},
       		year:'',
       		bgcolor:'',
       		mark:false,
+      		slideCount:5,
       		
     	}
   	},
@@ -147,6 +155,7 @@ export default {
 			jsonp(url, {city:'广州' }, function (data) {
 				this.mark=true;
                 this.filmInfo=data;
+                //this.slideCount=this.filmInfo.directors.length+this.filmInfo.casts.length;
             	console.log("filmInfo",this.filmInfo);
              	loading.close();
              	console.log('-------',data)
@@ -195,9 +204,11 @@ export default {
 		    this.getData();
 		 	var mySwiper = new Swiper ('.swiper-container', {
 			    direction: 'horizontal',
-			   /* loop: false,
-			    slidesPerView : 3,
-				slidesPerGroup : 3,*/
+			    loop: false,
+			    pagination: '.swiper-pagination',
+		        slidesPerView: 3,
+			    /*slidesPerView : 6,
+				slidesPerGroup : 1,*/
 			});
 	  	},
 
@@ -399,22 +410,18 @@ export default {
 }
 .cast-swiper .all-link{
 	width: 80%;
-	height: 70%;
-	background-color:  #f7f5f5;
+	height: 2.5rem;
+	background-color:  #F4F4F4;
+	font-size: 0.3rem;
+}
+.cast-swiper .all-link div:first-child{
 	display: inline-block;
-}
-.cast-swiper .all-link>div{
-	margin-top:45%;
-	color: #888;
-}
-.cast-swiper .all-link>div div{
-	width: 50%;
-	margin: 0px auto;
-}
-.cast-swiper .all-link>div div:first-child{
-	border-bottom:1px solid #ece7e7;
-	padding-bottom: 5px;
-	margin-bottom:5px;
+	padding-top: 40%;
+	padding-bottom: 7px;
+	margin-bottom: 7px;
+	font-size: 0.35rem;
+	border-bottom: 1px solid #EEEEEE;
+
 }
 
 

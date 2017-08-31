@@ -18,13 +18,13 @@
 		<div class="hotsearch-div" v-if="searchList===''">
 			<div class="hotsearch-title">Top排名</div>
 			<mt-cell v-for="(film,index) in hotList" :key="index" :to="{path:'/detail/'+film.id}">
-				<span>
+				<span class="index-title">
 					<img src="../assets/image/金牌.png" v-if="index==0">
 					<img src="../assets/image/银牌.png" v-else-if="index==1">
 					<img src="../assets/image/铜牌.png" v-else-if="index==2">
 					<span v-else>{{index+1}}</span>
 				</span>
-				<span>{{film.title}}</span>
+				<span class="film-title">{{film.title}}</span>
 			</mt-cell>
 		</div>
 		<div class="result-div" v-else>
@@ -258,5 +258,11 @@ export default {
 }
 .search-wrapper .hotsearch-div .mint-cell-value{
 	padding: 0.25rem 0px;
+}
+.search-wrapper .hotsearch-div .film-title{
+	color:#1c1e21;
+}
+.search-wrapper .hotsearch-div .index-title{
+	width: 10%;
 }
 </style>

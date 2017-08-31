@@ -131,6 +131,7 @@ export default {
       		year:'',
       		bgcolor:'',
       		mark:false,
+      		
     	}
   	},
  	components: { 
@@ -159,7 +160,7 @@ export default {
 			$(window).scroll(function(){
 				//console.log("滚动：",_this.bgcolor);
 				let winTop = $(this).scrollTop();
-				if(winTop >=infoTop){
+				if(winTop >=infoTop-20){
 					$(".infoPage-wrapper .mint-header").css({"background":_this.bgcolor});
 				}
 				else if(winTop >0){
@@ -183,6 +184,11 @@ export default {
 	  		});	
 	  	},
 
+	  	//返回
+	  	backClick(){
+	  		this.$router.go(-1);
+	  	},
+
 	  	//初始化
 	  	init(){
 	  		this.year=2017;
@@ -193,12 +199,11 @@ export default {
 			    slidesPerView : 3,
 				slidesPerGroup : 3,*/
 			});
-			
 	  	},
-	  	backClick(){
-	  		this.$router.go(-1);
-	  	}
 
+
+
+	  	
   	},
   	//页面渲染前获得数据
   	created:function() {

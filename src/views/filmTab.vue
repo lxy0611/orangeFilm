@@ -66,9 +66,9 @@
   					<div style="width:50%;float:left;">
 						<mt-navbar v-model="selected2" >
 							<mt-tab-item id="1">全部</mt-tab-item>
-						  	<mt-tab-item id="2">8月</mt-tab-item>
-						  	<mt-tab-item id="3">9月</mt-tab-item>
-						  	<mt-tab-item id="4">10月</mt-tab-item>
+						  	<mt-tab-item id="2">{{date.month}}月</mt-tab-item>
+						  	<mt-tab-item id="3">{{date.month+1}}月</mt-tab-item>
+						  	<mt-tab-item id="4">{{date.month+2}}月</mt-tab-item>
 						</mt-navbar>
 					</div>
 					<div style="width:25%;float:right;">
@@ -79,7 +79,7 @@
 					</div>
 				</div>
 				<div class="film-list" style="clear:both;">
-					<div class="show-date">8月25日，星期五</div>
+					<div class="show-date">{{date.month}}月{{date.day}}日，星期{{date.weekday}}</div>
 					<mt-cell  v-for="film in comingList" key="1" class="film-list" :to="{path:'/detail/'+film.id}">
 					<div style="width:30%;"><img :src="film.images.large" width="100%" height="auto"></div>
 					<div  style="width:50%;" class="info-list">
@@ -123,6 +123,11 @@ export default {
      		loading:false,
      		scrolled:false,
      		mark:false,
+     		date:{
+      			month:'',
+      			day:'',
+      			weekday:'',
+      		}
     	}
   	},
   	methods: {
@@ -171,10 +176,24 @@ export default {
 		   	})
 	  	},
 
+	  	//获取时间：月日星期
+	  	getNowDate(){
+	  		let myDate=new Date();
+	  		//let dd=myDate;
+	  		this.date.month=myDate.getMonth()+1;
+	  		this.date.day=myDate.getDate();
+	  		//dd.setDate(dd.getDate()+1);//获取明天后的日期 
+	  		let weekIndex=myDate.getDay(); //星期几
+  			let weekDay=new Array('一','二','三','四','五','六','日');
+  			this.date.weekday=weekDay[weekIndex];
+	  		console.log("-------date",this.date);
+	  	},
+
 	  	//初始化
 	  	init(){
   		 	this.getIntheaters();
 		   	this.getComingsoon();
+		   	this.getNowDate();
 	  	}
   	},
   	watch: {

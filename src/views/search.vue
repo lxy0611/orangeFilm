@@ -15,7 +15,19 @@
 				<span>取消</span>
 			</div>
 		</mt-header>
-		<div class="result-div">
+		<div class="hotsearch-div" v-if="searchList===''">
+			<div class="hotsearch-title">Top排名</div>
+			<mt-cell v-for="(film,index) in hotList" :key="index" :to="{path:'/detail/'+film.id}">
+				<span>
+					<img src="../assets/image/金牌.png" v-if="index==0">
+					<img src="../assets/image/银牌.png" v-else-if="index==1">
+					<img src="../assets/image/铜牌.png" v-else-if="index==2">
+					<span v-else>{{index+1}}</span>
+				</span>
+				<span>{{film.title}}</span>
+			</mt-cell>
+		</div>
+		<div class="result-div" v-else>
 			<mt-cell  v-for="film in searchList.subjects" key="1" class="film-list"  :to="{path:'/detail/'+film.id}">
 				<div style="width:30%;"><img :src="film.images.large" width="100%" height="auto"></div>
 				<div  style="width:60%;" class="info-list">
@@ -56,16 +68,18 @@ export default {
     	return {
     		inputVal:'',
     		searchList:'',
+    		mark:false,
+    		hotList:'',
     	}
   	},
   	methods:{
+
   		//搜索点击
   		searchClick(){
+  			this.mark=true;
   			let val=this.inputVal.trim();
   			if(val.length==0)
   				return;
-  			//跳转路由：带查询参数，变成 /search?q=this.inputVal
-  			/*this.$route.push({ path: 'search', query: { q: this.inputVal }})*/
   			this.getData(val);
   		},
 
@@ -85,6 +99,20 @@ export default {
         	_this.isLoading = false;
 		},
 
+		//热搜数据
+		getHotData(){
+  			let _this = this;
+        	let url='https://api.douban.com/v2/movie/top250';
+        	//loading效果
+            //let loading = Vue.prototype.$loading({text:"玩命加载中..."});
+			jsonp(url, {city:'广州',count:10 }, function (data) {
+                this.hotList=data.subjects;
+                console.log("-----hotList:",this.hotList);
+             	//先结束loading效果
+            }.bind(this));
+        	//_this.isLoading = false;
+		},
+
 		//取消键：返回
 		backClick(){
 			this.$router.go(-1);
@@ -92,6 +120,7 @@ export default {
 
   	},
   	mounted:function(){
+  		this.getHotData();
 	},
 	watch: {
 	    //监测$route对象，如果发生改变，就触发getIntheaters方法
@@ -204,5 +233,30 @@ export default {
 	font-size: 0.3rem;
 }
 
+.search-wrapper .hotsearch-div .hotsearch-title{
+	text-align: left;
+	background-color: #EEEEEE;
+	height: 0.9rem;
+	line-height: 0.9rem;
+	padding-left: 0.75rem;
+}
 
+.search-wrapper .hotsearch-div .mint-cell-wrapper{
+	font-size: 0.38rem; 
+	padding:0px;
+
+}
+.search-wrapper .hotsearch-div .mint-cell-wrapper span{
+	padding-left: 0.3rem;
+}
+.search-wrapper .hotsearch-div .mint-cell-wrapper img{
+	width: 0.48rem;
+}
+.search-wrapper .hotsearch-div .mint-cell-wrapper span>span{
+	padding-left: 0.12rem;
+	padding-right: 0.12rem;
+}
+.search-wrapper .hotsearch-div .mint-cell-value{
+	padding: 0.25rem 0px;
+}
 </style>

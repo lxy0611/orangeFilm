@@ -2,7 +2,8 @@
 
 [预览地址](https://lxy0611.github.io/orangeFilm_demo/)
 
-#已完成模块：正在热映
+#已完成模块：
+            正在热映
             
             即将上映
             

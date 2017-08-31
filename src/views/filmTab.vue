@@ -179,10 +179,11 @@ export default {
   	},
   	watch: {
         //监测$route对象，如果发生改变，就触发getIntheaters方法
-        "$route":'getIntheaters',
+        //"$route":'getIntheaters',
         //监测intheatersList，如果发生改变，就触发handleScroll,getBgcolor方法
         intheatersList:function(){
         	this.$nextTick(function () {
+        		console.log("mark:",this.mark);
         		if(this.mark==true){
         			this.handleScroll();
         		}

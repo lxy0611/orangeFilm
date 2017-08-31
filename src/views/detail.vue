@@ -74,13 +74,13 @@
 				<p class="title-p">影人</p>
 				<div class="swiper-container">
 					<div class="swiper-wrapper cast-swiper">
-					 	<div class="swiper-slide" v-for="(director,index) in filmInfo.directors" key="idex">
-				        	<div>
-				        		<img :src="director.avatars.large">
-				        		<p class="cast-p">{{director.name}}</p>
-				        		<p class="act-p">导演</p>
-				        	</div>
-				        </div>
+					 	<!-- <div class="swiper-slide" v-for="(director,index) in filmInfo.directors" key="idex">
+					 					        	<div>
+					 					        		<img v-if="director.avatars" :src="director.avatars.large">
+					 					        		<p class="cast-p">{{director.name}}</p>
+					 					        		<p class="act-p">导演</p>
+					 					        	</div>
+					 					        </div> -->
 				        <div class="swiper-slide" v-for="(cast,index) in filmInfo.casts" key="idex">
 				        	<div>
 				        		<img :src="cast.avatars.large">
@@ -148,6 +148,7 @@ export default {
                 this.filmInfo=data;
             	console.log("filmInfo",this.filmInfo);
              	loading.close();
+             	console.log('-------',data)
             }.bind(this));
 		},
 
@@ -210,9 +211,6 @@ export default {
   		let _this=this;
   		_this.init();
 	},*/
-	beforeDestroy:function(){
-  		
-	},
 	watch: {
         //监测filmInfo，如果发生改变，就触发handleScroll,getBgcolor方法
         filmInfo:function(){

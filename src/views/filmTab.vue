@@ -149,10 +149,10 @@ export default {
 		//即将上映
 		getComingsoon(){
 			let _this=this;
-            _this.loading=true;
+            //_this.loading=true;
 			jsonp('https://api.douban.com/v2/movie/coming_soon', {city:'广州', count: 15 }, function (data) {
                 this.comingList=data.subjects;
-            	_this.loading=false;
+            	//_this.loading=false;
             }.bind(this));
 		},
 

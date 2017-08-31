@@ -1,15 +1,15 @@
 <template>
 	<div class="infoPage-wrapper" v-cloak>
 		<mt-header title="电影" fixed v-if="filmInfo.subtype==='movie'" class="header-nav">
-		 	<router-link to="/" slot="left">
+		 	<div slot="left" @click="backClick">
 		   	<mt-button icon="back"></mt-button>
-		 	</router-link>
+		 	</div>
 			<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
 		</mt-header>
 		<mt-header title="电视" fixed v-else>
-		 	<router-link to="/" slot="left">
+		 	<div slot="left"  @click="backClick">
 		   	<mt-button icon="back"></mt-button>
-		 	</router-link>
+		 	</div>
 			<mt-button slot="right"><i class="el-icon-share"></i></mt-button>
 		</mt-header>
 		<div class="bg-img">
@@ -193,6 +193,9 @@ export default {
 				slidesPerGroup : 3,*/
 			});
 			
+	  	},
+	  	backClick(){
+	  		this.$router.go(-1);
 	  	}
 
   	},

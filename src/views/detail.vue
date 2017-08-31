@@ -74,16 +74,16 @@
 				<p class="title-p">影人</p>
 				<div class="swiper-container">
 					<div class="swiper-wrapper cast-swiper">
-					 	<!-- <div class="swiper-slide" v-for="(director,index) in filmInfo.directors" key="idex">
-					 					        	<div>
-					 					        		<img v-if="director.avatars" :src="director.avatars.large">
-					 					        		<p class="cast-p">{{director.name}}</p>
-					 					        		<p class="act-p">导演</p>
-					 					        	</div>
-					 					        </div> -->
+					 	<div class="swiper-slide" v-for="(director,index) in filmInfo.directors" key="idex">
+				        	<div>
+				        		<img v-if="director.avatars!==null && director.avatars.large!==null" :src="director.avatars.large">
+				        		<p class="cast-p">{{director.name}}</p>
+				        		<p class="act-p">导演</p>
+				        	</div>
+				        </div>
 				        <div class="swiper-slide" v-for="(cast,index) in filmInfo.casts" key="idex">
 				        	<div>
-				        		<img :src="cast.avatars.large">
+				        		<img  v-if="cast.avatars!==null && cast.avatars.large!==null"  :src="cast.avatars.large">
 				        		<p class="cast-p">{{cast.name}}</p>
 				        	</div>
 				        </div>
@@ -372,6 +372,7 @@ export default {
 }
 .swiper-slide>div img{
 	width: 80%;
+	height:2.5rem;
 }
 .cast-swiper{
 	margin-top: 10px;
